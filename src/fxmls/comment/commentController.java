@@ -1,6 +1,5 @@
 package fxmls.comment;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -16,13 +15,12 @@ public class commentController {
     public DatePicker dateField;
 
     public void confirmClicked(ActionEvent actionEvent) {
-    }
-
-    public void backToStartClicked(ActionEvent actionEvent) {
-        backToStartStage = (Stage) backToStartButton.getScene().getWindow();
-        backToStartStage.close();
+        titleField.requestFocus();
     }
 
     public void deleteClicked(ActionEvent actionEvent) {
+
     }
+
+
 }

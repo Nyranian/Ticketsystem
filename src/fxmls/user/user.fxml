@@ -9,7 +9,6 @@
     <children>
         <TextField fx:id="nameField" layoutX="21.0" layoutY="29.0" prefHeight="25.0" prefWidth="194.0" promptText="Name" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="29.0" />
         <Button layoutX="96.0" layoutY="185.0" mnemonicParsing="false" onAction="#confirmClicked" text="Bestätigen" AnchorPane.leftAnchor="96.0" AnchorPane.topAnchor="185.0" />
-        <Button layoutX="118.0" layoutY="233.0" mnemonicParsing="false" onAction="#backToStartClicked" text="Zurück zum Start" AnchorPane.leftAnchor="118.0" AnchorPane.topAnchor="233.0" />
         <Button layoutX="181.0" layoutY="185.0" mnemonicParsing="false" onAction="#deleteClicked" text="Löschen" AnchorPane.leftAnchor="181.0" AnchorPane.topAnchor="185.0" />
       <TextField fx:id="titleField" layoutX="227.0" layoutY="29.0" prefHeight="25.0" prefWidth="119.0" promptText="Title" AnchorPane.leftAnchor="227.0" AnchorPane.topAnchor="29.0" />
       <TextField fx:id="countryField" layoutX="21.0" layoutY="68.0" prefHeight="25.0" prefWidth="214.0" promptText="Country" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="68.0" />

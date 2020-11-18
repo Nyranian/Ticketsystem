@@ -8,7 +8,6 @@
     <children>
         <TextField fx:id="nameField" layoutX="19.0" layoutY="29.0" prefHeight="25.0" prefWidth="218.0" promptText="Name" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="29.0" />
         <Button layoutX="48.0" layoutY="75.0" mnemonicParsing="false" onAction="#confirmClicked" text="Bestätigen" AnchorPane.leftAnchor="48.0" AnchorPane.topAnchor="75.0" />
-        <Button layoutX="74.0" layoutY="122.0" mnemonicParsing="false" onAction="#backToStartClicked" text="Zurück zum Start" AnchorPane.leftAnchor="74.0" AnchorPane.topAnchor="122.0" />
         <Button layoutX="137.0" layoutY="75.0" mnemonicParsing="false" onAction="#deleteClicked" text="Löschen" AnchorPane.leftAnchor="137.0" />
     </children>
 </AnchorPane>

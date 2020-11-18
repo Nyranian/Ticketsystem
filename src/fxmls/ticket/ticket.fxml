@@ -10,7 +10,6 @@
     <children>
         <TextField fx:id="nameField" layoutX="21.0" layoutY="29.0" prefHeight="25.0" prefWidth="149.0" promptText="Name" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="29.0" />
         <Button layoutX="86.0" layoutY="344.0" mnemonicParsing="false" onAction="#confirmClicked" text="Bestätigen" AnchorPane.leftAnchor="86.0" AnchorPane.topAnchor="344.0" />
-        <Button layoutX="120.0" layoutY="389.0" mnemonicParsing="false" onAction="#backToStartClicked" text="Zurück zum Start" AnchorPane.leftAnchor="120.0" AnchorPane.topAnchor="389.0" />
         <Button layoutX="187.0" layoutY="344.0" mnemonicParsing="false" onAction="#deleteClicked" text="Löschen" AnchorPane.leftAnchor="187.0" AnchorPane.topAnchor="344.0" />
       <ComboBox fx:id="priorityID" layoutX="21.0" layoutY="63.0" prefHeight="25.0" prefWidth="149.0" promptText="PriorityID" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="63.0" />
       <ComboBox fx:id="orderID" layoutX="19.0" layoutY="97.0" prefHeight="25.0" prefWidth="149.0" promptText="OrderID" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="97.0" />
