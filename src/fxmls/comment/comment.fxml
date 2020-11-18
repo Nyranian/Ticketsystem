@@ -11,7 +11,7 @@
    <children>
       <TextField fx:id="titleField" layoutX="21.0" layoutY="29.0" prefHeight="25.0" prefWidth="218.0" promptText="Title" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="29.0" />
       <Button layoutX="56.0" layoutY="261.0" mnemonicParsing="false" onAction="#confirmClicked" text="Bestätigen" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="261.0" />
-      <Button layoutX="77.0" layoutY="309.0" mnemonicParsing="false" onAction="#backToStartClicked" text="Zurück zum Start" AnchorPane.leftAnchor="77.0" AnchorPane.topAnchor="309.0" />
+      <Button fx:id="backToStartButton" layoutX="77.0" layoutY="309.0" mnemonicParsing="false" onAction="#backToStartClicked" text="Zurück zum Start" AnchorPane.leftAnchor="77.0" AnchorPane.topAnchor="309.0" />
       <TextArea fx:id="textField" layoutX="19.0" layoutY="130.0" prefHeight="113.0" prefWidth="218.0" promptText="Text" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="130.0" />
       <DatePicker fx:id="dateField" layoutX="21.0" layoutY="60.0" prefHeight="25.0" prefWidth="218.0" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="60.0" />
       <ComboBox layoutX="19.0" layoutY="93.0" prefHeight="25.0" prefWidth="218.0" promptText="UserID" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="93.0" />
