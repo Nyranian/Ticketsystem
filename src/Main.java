@@ -39,7 +39,7 @@ public class Main extends Application {
          */
         Controller c = loader.getController();
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Ticketverwaltung");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
