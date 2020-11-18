@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="372.0" prefWidth="265.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxmls.order.orderController">
+    <children>
+        <TextField fx:id="nameField" layoutX="21.0" layoutY="29.0" prefHeight="25.0" prefWidth="218.0" promptText="Name" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="29.0" />
+        <Button layoutX="41.0" layoutY="282.0" mnemonicParsing="false" onAction="#confirmClicked" text="Bestätigen" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="282.0" />
+        <Button layoutX="75.0" layoutY="329.0" mnemonicParsing="false" onAction="#backToStartClicked" text="Zurück zum Start" AnchorPane.leftAnchor="75.0" AnchorPane.topAnchor="329.0" />
+        <Button layoutX="136.0" layoutY="282.0" mnemonicParsing="false" onAction="#deleteClicked" text="Löschen" />
+      <TextArea layoutX="21.0" layoutY="61.0" prefHeight="200.0" prefWidth="218.0" promptText="Description" />
+    </children>
+</AnchorPane>
