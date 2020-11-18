@@ -74,7 +74,7 @@ public class Controller {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
-        stage.setTitle("Hello World");
+        stage.setTitle("Status");
         stage.setScene(scene);
         stage.show();
     }
