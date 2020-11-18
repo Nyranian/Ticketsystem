@@ -17,7 +17,7 @@ public class Controller {
         stage.setTitle("Department");
         stage.setScene(scene);
         stage.show();
-        System.out.println("test");
+        System.out.println("WAGENEDER");
     }
 
     public void orderClicked(ActionEvent actionEvent) throws IOException {
