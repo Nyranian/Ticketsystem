@@ -1,6 +1,5 @@
 package application;
 
-import application.controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,11 +10,6 @@ public class Main extends Application {
 
     /**
      * @ToDo edit run configuration
-     * !! FIRST TRY TO RUN YOU APPLICATION FROM THE LAUNCHER CLASS !!
-     *
-     *
-     *
-     * If this does not work try the following:
      * Open "Run" -> "Edit Configurations..."
      * Add this to your VM options (just copy & paste the following line):
      * --module-path "C:\Program Files\Java\javafx-sdk-11.0.2\lib" --add-modules=javafx.controls,javafx.fxml
@@ -29,22 +23,10 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("application.view/scene.fxml"));
+        MyFXMLLoader.setPrimaryStage((primaryStage));
 
-        /**
-         * Lade die FXML Datei
-         * --> Hier wird automatisch eine application.controller.Controller - Instanz erzeugt.
-         */
-        Parent root = loader.load();
-
-        /**
-         * Hole die automatisch erzeugte application.controller.Controller - Instanz.
-         */
-        Controller c = loader.getController();
-
-        primaryStage.setTitle("Ticketverwaltung");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/scene.fxml", "Ticketsystem");
     }
 
     public static void main(String[] args) {
