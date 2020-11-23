@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.MyFXMLLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +13,7 @@ import java.io.IOException;
 public class Controller {
 
     public void departmentClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("application/view/department.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/view/department.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
@@ -22,7 +23,7 @@ public class Controller {
     }
 
     public void orderClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("application/view/order.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/view/order.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
@@ -32,7 +33,7 @@ public class Controller {
     }
 
     public void ticketClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("application/view/ticket.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/view/ticket.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
@@ -42,7 +43,7 @@ public class Controller {
     }
 
     public void commentClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("application/view/comment.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/view/comment.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
@@ -52,7 +53,7 @@ public class Controller {
     }
 
     public void userClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("application/view/user.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/view/user.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
@@ -62,7 +63,7 @@ public class Controller {
     }
 
     public void priorityClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("application/view/priority.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/view/priority.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
@@ -72,12 +73,22 @@ public class Controller {
     }
 
     public void statusClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("application/view/status.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/application/view/status.fxml"));
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root);
         stage.setTitle("Status");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void editStatiClicked(ActionEvent actionEvent) {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/status.fxml", "Stati bearbeiten");
+    }
+
+    public void editPrioritiesClicked(ActionEvent actionEvent) {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/priority.fxml", "Stati bearbeiten");
     }
 }

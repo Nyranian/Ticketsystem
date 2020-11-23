@@ -29,22 +29,10 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("application.view/scene.fxml"));
+        MyFXMLLoader.setPrimaryStage(primaryStage);
 
-        /**
-         * Lade die FXML Datei
-         * --> Hier wird automatisch eine application.controller.Controller - Instanz erzeugt.
-         */
-        Parent root = loader.load();
-
-        /**
-         * Hole die automatisch erzeugte application.controller.Controller - Instanz.
-         */
-        Controller c = loader.getController();
-
-        primaryStage.setTitle("Ticketverwaltung");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/scene.fxml", "Ticketsystem");
     }
 
     public static void main(String[] args) {
