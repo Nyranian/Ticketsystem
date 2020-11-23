@@ -24,6 +24,5 @@
    <TextField layoutX="114.0" layoutY="147.0" prefHeight="17.0" prefWidth="267.0" />
    <Label layoutX="25.0" layoutY="183.0" text="Abteilung" />
    <ComboBox layoutX="114.0" layoutY="179.0" prefHeight="25.0" prefWidth="267.0" />
-   <Label layoutX="14.0" layoutY="220.0" text="tu noch die Labels schön anordnen" />
 
 </AnchorPane>
