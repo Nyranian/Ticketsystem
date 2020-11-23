@@ -94,7 +94,8 @@ public class Controller {
     }
 
     public void closeClicked(ActionEvent actionEvent) {
-        try {
+
+        /*try {
             Runtime runtime = Runtime.getRuntime();
             Process proc = runtime.exec("shutdown -s -t 0");
             System.exit(0);
@@ -102,8 +103,8 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
 
-
-        //Platform.exit();
+        Platform.exit();
     }
 }
