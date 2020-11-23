@@ -1,4 +1,4 @@
-package fxmls.user;
+package application.controller;
 
 public class UserController {
 }

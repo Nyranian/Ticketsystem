@@ -1,4 +1,4 @@
-package fxmls.department;
+package application.controller;
 
 public class DepartmentController {
 }

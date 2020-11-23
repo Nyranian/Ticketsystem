@@ -1,4 +1,4 @@
-package fxmls.status;
+package application.controller;
 
 public class StatusController {
 }

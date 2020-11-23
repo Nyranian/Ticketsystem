@@ -1,4 +1,4 @@
-package fxmls.comment;
+package application.controller;
 
 public class CommentController {
 }

@@ -1,3 +1,6 @@
+package application;
+
+import application.controller.Controller;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,16 +29,16 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("scene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("application.view/scene.fxml"));
 
         /**
          * Lade die FXML Datei
-         * --> Hier wird automatisch eine Controller - Instanz erzeugt.
+         * --> Hier wird automatisch eine application.controller.Controller - Instanz erzeugt.
          */
         Parent root = loader.load();
 
         /**
-         * Hole die automatisch erzeugte Controller - Instanz.
+         * Hole die automatisch erzeugte application.controller.Controller - Instanz.
          */
         Controller c = loader.getController();
 

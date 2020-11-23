@@ -1,4 +1,4 @@
-package fxmls.priority;
+package application.controller;
 
 public class PriorityController {
 }

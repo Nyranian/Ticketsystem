@@ -1,4 +1,4 @@
-package fxmls.ticket;
+package application.controller;
 
 public class TicketController {
 }

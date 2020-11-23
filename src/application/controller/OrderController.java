@@ -1,4 +1,4 @@
-package fxmls.order;
+package application.controller;
 
 public class OrderController {
 }
