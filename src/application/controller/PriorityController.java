@@ -1,8 +1,10 @@
 package application.controller;
 
 import application.model.Priority;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -28,12 +30,13 @@ public class PriorityController {
 
                 while ((s = br.readLine()) != null) {
                     // s enthält die gesamte Zeile
-                    s = s.replace("\"", ""); // ersetze alle " in der Zeile
+                    //s = s.replace("\"", ""); // ersetze alle " in der Zeile
 
                     Priority priority = new Priority();
 
-                     String[] words = s.split(";");
-                     priority.priorityName = words[0];
+                    String[] words = s.split(";");
+                    priority.priorityNumber = words[0];
+                    priority.priorityName = words[1];
 
                     priorityList.add(priority); // füge Artikel zur Liste hinzu
                 }
@@ -54,4 +57,10 @@ public class PriorityController {
 
     Comparator<? super Priority> coparatorPriority_byName = (Comparator<Priority>) (o1, o2) -> o1.priorityName.compareToIgnoreCase(o2.priorityName);
 
+    public void abbrechenClicked(ActionEvent actionEvent) {
+        Platform.exit();
+    }
+
+    public void speichernCLicked(ActionEvent actionEvent) {
+    }
 }
