@@ -29,7 +29,8 @@ public void initialize(){
             String[] words = s.split(";");
 
             Status status = new Status();
-            status.statusName = words[0];
+            status.statusName = words[1];
+            status.statusID = Integer.parseInt(words[0]);
 
             statusList.add(status);
         }
