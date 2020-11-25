@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="304.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.StatusController">
+<AnchorPane prefHeight="304.0" prefWidth="457.0" xmlns="http://javafx.com/javafx/1.8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.StatusController">
    <SplitPane dividerPositions="0.5" layoutX="2.0" layoutY="1.0" prefHeight="304.0" prefWidth="457.0">
       <items>
          <AnchorPane prefHeight="200.0" prefWidth="200.0">
@@ -19,7 +19,7 @@
             <children>
             
                       <TextField fx:id="statusNameField" layoutX="45.0" layoutY="39.0" prefHeight="25.0" prefWidth="190.0" promptText="name" />
-                <Button  layoutX="25.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Speichern" />
+                <Button layoutX="25.0" layoutY="117.0" mnemonicParsing="false" onAction="#saveClicked" prefHeight="25.0" prefWidth="70.0" text="Speichern" />
                 <Button layoutX="133.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Abbrechen" />
                <Label layoutX="7.0" layoutY="43.0" text="Status:" />
             </children>

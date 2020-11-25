@@ -3,53 +3,86 @@ package application.controller;
 import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 import java.io.*;
 import java.util.Comparator;
 
 public class StatusController {
-    public ListView statusListView;
+    public ListView<Status> statusListView;
     public File statusFileToOpen = new File("stati.csv");
     public TextField statusNameField;
+    String statusText = "";
+    String currentItemText;
+    int currentIndex;
 
     ObservableList<Status> statusList = FXCollections.observableArrayList();
 
-    Comparator<? super Status> coparatorStatus_byName = (Comparator<Status>) (o1, o2) -> o1.statusName.compareToIgnoreCase(o2.statusName);
+    public void initialize() {
+        String s = "";
 
-public void initialize(){
-    String s = "";
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(statusFileToOpen));
 
-    try {
-        BufferedReader br =  new BufferedReader(new FileReader(statusFileToOpen));
+            while ((s = br.readLine()) != null) {
+                String[] words = s.split(";");
 
-        while ((s = br.readLine()) != null) {
-            String[] words = s.split(";");
+                Status status = new Status();
+                status.statusName = words[1];
+                status.statusID = Integer.parseInt(words[0]);
 
-            Status status = new Status();
-            status.statusName = words[1];
-            status.statusID = Integer.parseInt(words[0]);
+                statusText += status.statusID + ";" + status.statusName + ";\n";
 
-            statusList.add(status);
+                statusList.add(status);
+            }
+            br.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        br.close();
 
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
+        statusListView.setItems(statusList);
+
     }
-
-    statusList.sort(coparatorStatus_byName);
-    statusListView.setItems(statusList);
-
-}
 
     public void statusItemClicked() {
-    if(statusListView.getSelectionModel().getSelectedItem() != null){
-        statusNameField.setText(statusListView.getSelectionModel().getSelectedItem().toString());
+        if (statusListView.getSelectionModel().getSelectedItem() != null) {
+            statusNameField.setText(statusListView.getSelectionModel().getSelectedItem().toString());
+
+            currentIndex = statusListView.getSelectionModel().getSelectedIndex();
+
+            currentItemText = statusList.get(currentIndex).statusID + ";" + statusList.get(statusListView.getSelectionModel().getSelectedIndex()).statusName + ";\n";
+        }
     }
+
+    public void saveClicked(ActionEvent actionEvent) {
+        if (!statusNameField.getText().isEmpty()) {
+
+            Status status = new Status();
+            String replacementText = "";
+            String s = "";
+
+            statusList.get(currentIndex).statusName = statusNameField.getText();
+            statusListView.setItems(statusList);
+
+            status.statusName = statusNameField.getText();
+
+            replacementText = statusList.get(currentIndex).statusID + ";" + statusNameField.getText() + ";\n";
+
+            statusText = statusText.replace(currentItemText, replacementText);
+
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter(statusFileToOpen));
+
+                bw.write(statusText);
+                bw.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 }
