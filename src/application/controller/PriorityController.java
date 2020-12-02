@@ -57,27 +57,29 @@ public class PriorityController {
     }
 
     public void speichernCLicked(ActionEvent actionEvent) {
-        if (this.selectedPriority != null) {
+        if(priorityTextField != null && priorityTextField.getText() != null) {
+            if (this.selectedPriority != null) {
                 selectedPriority.priorityName = priorityTextField.getText();
 
                 prioritylistView.refresh();
                 System.out.println("Daten aktualisieren");
 
-        } else {
-            // erzeuge neuen Priorität, füge ihn in die ListView ein
-            // und speichere alles in die Datei
+            } else {
+                // erzeuge neuen Priorität, füge ihn in die ListView ein
+                // und speichere alles in die Datei
                 Priority priority = new Priority(); //neuer Speicherplatz für artikel wird reserviert
-                priority.priorityID = String.valueOf(Integer.parseInt(priorityList.get(priorityList.size()-1).priorityID) + 1);
+                priority.priorityID = String.valueOf(Integer.parseInt(priorityList.get(priorityList.size() - 1).priorityID) + 1);
                 priority.priorityName = priorityTextField.getText();
 
                 priorityList.add(priority);
-                
+
                 System.out.println("Neue Priorität");
 
+            }
+            printToFile();
+            this.selectedPriority = null;
+            priorityTextField.clear();
         }
-        printToFile();
-        this.selectedPriority = null;
-        priorityTextField.clear();
 
     }
 
