@@ -1,23 +1,29 @@
 package application.controller;
 
+import application.MyFXMLLoader;
 import application.model.Priority;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
 import java.io.*;
 
 public class PriorityController {
     public ListView prioritylistView;
     public TextField priorityTextField;
+    public Button abbrechenFXid;
     private Priority selectedPriority = null;
     ObservableList<Priority> priorityList = FXCollections.observableArrayList();
 
     File priorityFileToOpen = new File(System.getProperty("user.dir") + "\\priorities.csv");//Aktueller ordner + standard Datei
 
-    public  void initialize(){
+    public void initialize() {
         String s;
 
         try {
@@ -52,19 +58,18 @@ public class PriorityController {
     }
 
 
-    public void abbrechenClicked(ActionEvent actionEvent) {
-        Platform.exit();
+    public void abbrechenClicked() {
+        ((Stage) abbrechenFXid.getScene().getWindow()).close();
     }
 
     public void speichernCLicked(ActionEvent actionEvent) {
-        if(priorityTextField != null && priorityTextField.getText() != null) {
-            if (this.selectedPriority != null) {
-                selectedPriority.priorityName = priorityTextField.getText();
+        if (this.selectedPriority != null) {
+            selectedPriority.priorityName = priorityTextField.getText();
 
-                prioritylistView.refresh();
-                System.out.println("Daten aktualisieren");
+            prioritylistView.refresh();
+            System.out.println("Daten aktualisieren");
 
-            } else {
+        } else {
                 // erzeuge neuen Priorität, füge ihn in die ListView ein
                 // und speichere alles in die Datei
                 Priority priority = new Priority(); //neuer Speicherplatz für artikel wird reserviert
@@ -74,12 +79,10 @@ public class PriorityController {
                 priorityList.add(priority);
 
                 System.out.println("Neue Priorität");
-
-            }
-            printToFile();
-            this.selectedPriority = null;
-            priorityTextField.clear();
         }
+        printToFile();
+        this.selectedPriority = null;
+        priorityTextField.clear();
 
     }
 
@@ -95,5 +98,4 @@ public class PriorityController {
             e.printStackTrace();
         }
     }
-
 }
