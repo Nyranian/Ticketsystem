@@ -6,10 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 
 public class DepartmentController {
     public ListView departmentListView;
@@ -58,9 +57,34 @@ public class DepartmentController {
     }
 
     public void saveClicked() {
+        if (!departmentNameField.getText().isEmpty()) {
+            String replacementText = "";
+
+            departmentList.get(currentIndex).departmentName = departmentNameField.getText();
+            departmentListView.setItems(departmentList);
+            departmentListView.refresh();
+
+            replacementText = departmentList.get(currentIndex).departmentID + ";" + departmentNameField.getText() + ";\n";
+
+            statusText = statusText.replace(currentItemText, replacementText);
+
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("departments.csv"));
+
+                bw.write(statusText);
+                bw.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            departmentNameField.setText("");
+
+        }
     }
 
     public void cancelClicked() {
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
 
