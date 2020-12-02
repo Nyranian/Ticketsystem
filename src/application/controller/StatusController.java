@@ -59,21 +59,25 @@ public class StatusController {
     }
 
     public void saveClicked() {
-        if (!statusNameField.getText().isEmpty()) {
-            String replacementText = "";
+        String statusText = "";
+        Status status = new Status();
+
+        System.out.println(statusListView.getSelectionModel().getSelectedIndex());
+
+        if (statusListView.getSelectionModel().getSelectedIndex() != -1) {
+
+            statusText = statusList.get(currentIndex).statusID + ";" + statusNameField.getText() + ";\n";
 
             statusList.get(currentIndex).statusName = statusNameField.getText();
             statusListView.setItems(statusList);
             statusListView.refresh();
 
-            replacementText = statusList.get(currentIndex).statusID + ";" + statusNameField.getText() + ";\n";
-
-            statusText = statusText.replace(currentItemText, replacementText);
+            this.statusText = this.statusText.replace(currentItemText, statusText);
 
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
 
-                bw.write(statusText);
+                bw.write(this.statusText);
                 bw.close();
 
             } catch (IOException e) {
@@ -82,6 +86,25 @@ public class StatusController {
 
             statusNameField.setText("");
 
+        }else{
+            status.statusID = statusList.size() + 1;
+            status.statusName = statusNameField.getText();
+
+            statusText = status.statusID + ";" + status.statusName + ";\n";
+
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv", true));
+
+                bw.write(statusText);
+                bw.close();
+
+                statusList.add(status);
+                statusListView.setItems(statusList);
+                statusListView.refresh();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
