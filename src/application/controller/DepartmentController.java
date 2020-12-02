@@ -15,8 +15,8 @@ public class DepartmentController {
     public TextField departmentNameField;
     public Button saveButton;
     public Button cancelButton;
-    ObservableList<Department> departmentList = FXCollections.observableArrayList();
-    String statusText = "";
+    public ObservableList<Department> departmentList = FXCollections.observableArrayList();
+    String departmentText = "";
     String currentItemText;
     int currentIndex;
 
@@ -33,7 +33,7 @@ public class DepartmentController {
                 department.departmentName = words[1];
                 department.departmentID = Integer.parseInt(words[0]);
 
-                statusText += department.departmentID + ";" + department.departmentName + ";\n";
+                departmentText += department.departmentID + ";" + department.departmentName + ";\n";
 
                 departmentList.add(department);
             }
@@ -57,21 +57,23 @@ public class DepartmentController {
     }
 
     public void saveClicked() {
-        if (!departmentNameField.getText().isEmpty()) {
-            String replacementText = "";
+        String departmentText = "";
+        Department department = new Department();
+
+        if (departmentListView.getSelectionModel().getSelectedIndex() != -1) {
+
+            departmentText = departmentList.get(currentIndex).departmentID + ";" + departmentNameField.getText() + ";\n";
 
             departmentList.get(currentIndex).departmentName = departmentNameField.getText();
             departmentListView.setItems(departmentList);
             departmentListView.refresh();
 
-            replacementText = departmentList.get(currentIndex).departmentID + ";" + departmentNameField.getText() + ";\n";
-
-            statusText = statusText.replace(currentItemText, replacementText);
+            this.departmentText = this.departmentText.replace(currentItemText, departmentText);
 
             try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("departments.csv"));
+                BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
 
-                bw.write(statusText);
+                bw.write(this.departmentText);
                 bw.close();
 
             } catch (IOException e) {
@@ -80,6 +82,25 @@ public class DepartmentController {
 
             departmentNameField.setText("");
 
+        }else{
+            department.departmentID = departmentList.size() + 1;
+            department.departmentName = departmentNameField.getText();
+
+            departmentText = department.departmentID + ";" + department.departmentName + ";\n";
+
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv", true));
+
+                bw.write(departmentText);
+                bw.close();
+
+                departmentList.add(department);
+                departmentListView.setItems(departmentList);
+                departmentListView.refresh();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
