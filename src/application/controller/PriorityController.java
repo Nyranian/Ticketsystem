@@ -17,7 +17,7 @@ import java.io.*;
 public class PriorityController {
     public ListView prioritylistView;
     public TextField priorityTextField;
-    public Button abbrechenFXid;
+    public Button cancelButton;
     private Priority selectedPriority = null;
     ObservableList<Priority> priorityList = FXCollections.observableArrayList();
 
@@ -59,7 +59,7 @@ public class PriorityController {
 
 
     public void abbrechenClicked() {
-        ((Stage) abbrechenFXid.getScene().getWindow()).close();
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
     public void speichernCLicked(ActionEvent actionEvent) {
