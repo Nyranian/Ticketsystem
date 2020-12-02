@@ -83,6 +83,8 @@ public class StatusController {
                 e.printStackTrace();
             }
 
+            statusNameField.setText("");
+
         }
     }
 

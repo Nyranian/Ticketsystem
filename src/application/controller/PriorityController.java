@@ -58,7 +58,7 @@ public class PriorityController {
     }
 
 
-    public void abbrechenClicked() {
+    public void cancelClicked() {
         ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
