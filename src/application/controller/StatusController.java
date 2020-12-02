@@ -61,8 +61,6 @@ public class StatusController {
 
     public void saveClicked() {
         if (!statusNameField.getText().isEmpty()) {
-
-            Status status = new Status();
             String replacementText = "";
 
             statusList.get(currentIndex).statusName = statusNameField.getText();

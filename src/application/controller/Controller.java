@@ -17,17 +17,14 @@ public class Controller {
     }
 
     public void closeClicked(ActionEvent actionEvent) {
-
-        /*try {
-            Runtime runtime = Runtime.getRuntime();
-            Process proc = runtime.exec("shutdown -s -t 0");
-            System.exit(0);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-
         Platform.exit();
+    }
+
+    public void editUserClicked() {
+    }
+
+    public void editDepartmentClicked() {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/department.fxml", "Abteilungen bearbeiten");
     }
 }

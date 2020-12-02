@@ -17,7 +17,7 @@
          </AnchorPane>
        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="158.0" prefWidth="448.0">
             <children>
-                <Button fx:id="cancelButton" layoutX="105.0" layoutY="111.0" mnemonicParsing="false" onAction="#abbrechenClicked" prefHeight="25.0" prefWidth="76.0" text="Abbrechen" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="111.0" />
+                <Button fx:id="cancelButton" layoutX="105.0" layoutY="111.0" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="76.0" text="Abbrechen" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="111.0" />
             
                 <Button layoutY="111.0" mnemonicParsing="false" onAction="#speichernCLicked" prefHeight="25.0" prefWidth="70.0" text="Speichern" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="111.0" />
                <Label layoutX="9.0" layoutY="5.0" text="Priorität:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
