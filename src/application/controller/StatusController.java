@@ -13,7 +13,6 @@ import java.io.*;
 
 public class StatusController {
     public ListView<Status> statusListView;
-    public File statusFileToOpen = new File("stati.csv");
     public TextField statusNameField;
     public Button cancelButton;
     String statusText = "";
@@ -26,7 +25,7 @@ public class StatusController {
         String s = "";
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader(statusFileToOpen));
+            BufferedReader br = new BufferedReader(new FileReader("stati.csv"));
 
             while ((s = br.readLine()) != null) {
                 String[] words = s.split(";");
@@ -72,7 +71,7 @@ public class StatusController {
             statusText = statusText.replace(currentItemText, replacementText);
 
             try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter(statusFileToOpen));
+                BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
 
                 bw.write(statusText);
                 bw.close();

@@ -21,13 +21,11 @@ public class PriorityController {
     private Priority selectedPriority = null;
     ObservableList<Priority> priorityList = FXCollections.observableArrayList();
 
-    File priorityFileToOpen = new File(System.getProperty("user.dir") + "\\priorities.csv");//Aktueller ordner + standard Datei
-
     public void initialize() {
         String s;
 
         try {
-            try (BufferedReader br = new BufferedReader(new FileReader(priorityFileToOpen))) {
+            try (BufferedReader br = new BufferedReader(new FileReader("priorities.csv"))) {
 
                 while ((s = br.readLine()) != null) {
 
@@ -88,7 +86,7 @@ public class PriorityController {
 
     private void printToFile() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(priorityFileToOpen));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("priorities.csv"));
             for (Priority p : priorityList) {
                 bw.write(p.newCSVLine());
             }
