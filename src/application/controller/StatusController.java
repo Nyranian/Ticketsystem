@@ -57,7 +57,7 @@ public class StatusController {
         }
     }
 
-    public void saveClicked(ActionEvent actionEvent) {
+    public void saveClicked() {
         if (!statusNameField.getText().isEmpty()) {
 
             Status status = new Status();
@@ -66,6 +66,7 @@ public class StatusController {
 
             statusList.get(currentIndex).statusName = statusNameField.getText();
             statusListView.setItems(statusList);
+            statusListView.refresh();
 
             status.statusName = statusNameField.getText();
 
