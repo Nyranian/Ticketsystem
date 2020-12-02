@@ -21,6 +21,8 @@ public class Controller {
     }
 
     public void editUserClicked() {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/user.fxml", "Benutzer bearbeiten");
     }
 
     public void editDepartmentClicked() {
