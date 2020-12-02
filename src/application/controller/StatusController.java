@@ -4,16 +4,18 @@ import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.Comparator;
 
 public class StatusController {
     public ListView<Status> statusListView;
     public File statusFileToOpen = new File("stati.csv");
     public TextField statusNameField;
+    public Button cancelButton;
     String statusText = "";
     String currentItemText;
     int currentIndex;
@@ -62,13 +64,10 @@ public class StatusController {
 
             Status status = new Status();
             String replacementText = "";
-            String s = "";
 
             statusList.get(currentIndex).statusName = statusNameField.getText();
             statusListView.setItems(statusList);
             statusListView.refresh();
-
-            status.statusName = statusNameField.getText();
 
             replacementText = statusList.get(currentIndex).statusID + ";" + statusNameField.getText() + ";\n";
 
@@ -85,5 +84,9 @@ public class StatusController {
             }
 
         }
+    }
+
+    public void cancelClicked() {
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 }

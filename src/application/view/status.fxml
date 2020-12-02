@@ -20,7 +20,7 @@
             
                       <TextField fx:id="statusNameField" layoutX="45.0" layoutY="39.0" prefHeight="25.0" prefWidth="190.0" promptText="name" />
                 <Button layoutX="25.0" layoutY="117.0" mnemonicParsing="false" onAction="#saveClicked" prefHeight="25.0" prefWidth="70.0" text="Speichern" />
-                <Button layoutX="133.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Abbrechen" />
+                <Button fx:id="cancelButton" layoutX="133.0" layoutY="117.0" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="80.0" text="Abbrechen" />
                <Label layoutX="7.0" layoutY="43.0" text="Status:" />
             </children>
          </AnchorPane>
