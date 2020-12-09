@@ -22,26 +22,7 @@ public class PriorityController {
     ObservableList<Priority> priorityList = FXCollections.observableArrayList();
 
     public void initialize() {
-        String s;
-
-        try {
-            try (BufferedReader br = new BufferedReader(new FileReader("priorities.csv"))) {
-
-                while ((s = br.readLine()) != null) {
-
-                    Priority priority = new Priority();
-
-                    String[] words = s.split(";");
-                    priority.priorityID = words[0];
-                    priority.priorityName = words[1];
-
-                    priorityList.add(priority); // füge Priorität zur Liste hinzu
-                }
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        priorityList = Priority.openFile();
         prioritylistView.setItems(priorityList);
 
     }
