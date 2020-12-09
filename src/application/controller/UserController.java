@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.model.Priority;
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,11 +10,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 public class UserController {
     public ListView userListView;
@@ -40,16 +34,21 @@ public class UserController {
 
 
     public void saveClicked(ActionEvent actionEvent) {
-        if (this.selectedUser != null) {
+        if (this.selectedUser != null &&
+                !(userNameTextfield.getText().equals("") || userNameTextfield == null)&&
+                !(userTitleTextfield.getText().equals("") || userTitleTextfield == null)&&
+                !(userPlzTextfield.getText().equals("") || userPlzTextfield == null)&&
+                !(userPlaceTextfield.getText().equals("") || userPlaceTextfield == null)&&
+                !userDepartmentCombobox.getItems().isEmpty()
+        ) {
             selectedUser.userName = userNameTextfield.getText();
             selectedUser.userPlace = userPlaceTextfield.getText();
             selectedUser.userStreet = userStreetTextfield.getText();
             selectedUser.userTitle = userTitleTextfield.getText();
             selectedUser.userPlz = Short.parseShort(userPlzTextfield.getText());
-
+            selectedUser.userDepartment = (String) userDepartmentCombobox.getValue();
             userListView.refresh();
             System.out.println("Daten aktualisieren");
-
         } else {
             // erzeuge neuen Priorität, füge ihn in die ListView ein
             // und speichere alles in die Datei
@@ -64,9 +63,13 @@ public class UserController {
         User.printToFile(userList);
         this.selectedUser = null;
         userNameTextfield.clear();
+        userPlaceTextfield.clear();
+        userPlzTextfield.clear();
+        userTitleTextfield.clear();
+        userStreetTextfield.clear();
+        userDepartmentCombobox.getItems().clear();
 
-    }
-    private void printToFile() {
+
 
     }
 
@@ -85,7 +88,7 @@ public class UserController {
             userPlaceTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlace);
             userPlzTextfield.setText(String.valueOf(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlz));
             userStreetTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userStreet);
-            //userDepartmentCombobox.
+            userDepartmentCombobox.setItems(User.userDepartmentList);
         }
     }
 }

@@ -9,9 +9,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-
 public class PriorityController {
     public ListView prioritylistView;
     public TextField priorityTextField;
