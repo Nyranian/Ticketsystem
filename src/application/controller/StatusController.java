@@ -1,5 +1,6 @@
 package application.controller;
 
+import application.model.Priority;
 import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ public class StatusController {
     public ListView<Status> statusListView;
     public TextField statusNameField;
     public Button cancelButton;
+    Status currentStatus;
     String currentItemText;
     int currentIndex;
     String statusText = "";
@@ -30,59 +32,28 @@ public class StatusController {
             statusNameField.setText(statusListView.getSelectionModel().getSelectedItem().toString());
 
             currentIndex = statusListView.getSelectionModel().getSelectedIndex();
+            currentStatus = statusListView.getSelectionModel().getSelectedItem();
 
             currentItemText = statusList.get(currentIndex).statusID + ";" + statusList.get(statusListView.getSelectionModel().getSelectedIndex()).statusName + ";\n";
         }
     }
 
     public void saveClicked() {
-        String statusText = "";
-        Status status = new Status();
+        if (this.currentStatus != null) {
+            currentStatus.statusName = statusNameField.getText();
 
-        System.out.println(statusListView.getSelectionModel().getSelectedIndex());
-
-        if (statusListView.getSelectionModel().getSelectedIndex() != -1) {
-
-            statusText = statusList.get(currentIndex).statusID + ";" + statusNameField.getText() + ";\n";
-
-            statusList.get(currentIndex).statusName = statusNameField.getText();
-            statusListView.setItems(statusList);
             statusListView.refresh();
 
-            this.statusText = this.statusText.replace(currentItemText, statusText);
-
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
-
-                bw.write(this.statusText);
-                bw.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            statusNameField.setText("");
-
-        }else{
-            status.statusID = statusList.size() + 1;
+        } else {
+            Status status = new Status();
+            status.statusID = (statusList.get(statusList.size() - 1).statusID) + 1;
             status.statusName = statusNameField.getText();
 
-            statusText = status.statusID + ";" + status.statusName + ";\n";
-
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv", true));
-
-                bw.write(statusText);
-                bw.close();
-
-                statusList.add(status);
-                statusListView.setItems(statusList);
-                statusListView.refresh();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            statusList.add(status);
         }
+        Status.printToFile(statusList);
+        this.currentStatus = null;
+        statusNameField.clear();
     }
 
     public void cancelClicked() {

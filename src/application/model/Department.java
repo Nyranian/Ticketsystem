@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Department {
     public String departmentName;
@@ -16,12 +18,16 @@ public class Department {
         return departmentName;
     }
 
+    public  String newCSVLine(){
+        return departmentID + ";" + departmentName + "\n";
+    }
+
     public static ObservableList<Department> openFile(){
         String s = "";
         ObservableList<Department> result = FXCollections.observableArrayList();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("departments.csv"));
+            BufferedReader br = new BufferedReader(new FileReader("department.csv"));
 
             while ((s = br.readLine()) != null) {
                 String[] words = s.split(";");
@@ -40,6 +46,19 @@ public class Department {
         }
 
         return result;
+    }
+
+    public static void printToFile(ObservableList<Department> departmentList){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
+            for (Department d : departmentList) {
+                bw.write(d.newCSVLine());
+            }
+            bw.flush();
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

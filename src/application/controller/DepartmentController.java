@@ -1,6 +1,7 @@
 package application.controller;
 
 import application.model.Department;
+import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -16,9 +17,11 @@ public class DepartmentController {
     public Button saveButton;
     public Button cancelButton;
     public ObservableList<Department> departmentList = FXCollections.observableArrayList();
+
     String departmentText = "";
     String currentItemText;
     int currentIndex;
+    Department currentDepartment;
 
     public void initialize(){
         departmentList = Department.openFile();
@@ -31,57 +34,28 @@ public class DepartmentController {
             departmentNameField.setText(departmentListView.getSelectionModel().getSelectedItem().toString());
 
             currentIndex = departmentListView.getSelectionModel().getSelectedIndex();
+            currentDepartment = (Department) departmentListView.getSelectionModel().getSelectedItem();
 
             currentItemText = departmentList.get(currentIndex).departmentID + ";" + departmentList.get(departmentListView.getSelectionModel().getSelectedIndex()).departmentName + ";\n";
         }
     }
 
     public void saveClicked() {
-        String departmentText = "";
-        Department department = new Department();
+        if (this.currentDepartment != null) {
+            currentDepartment.departmentName = departmentNameField.getText();
 
-        if (departmentListView.getSelectionModel().getSelectedIndex() != -1) {
-
-            departmentText = departmentList.get(currentIndex).departmentID + ";" + departmentNameField.getText() + ";\n";
-
-            departmentList.get(currentIndex).departmentName = departmentNameField.getText();
-            departmentListView.setItems(departmentList);
             departmentListView.refresh();
 
-            this.departmentText = this.departmentText.replace(currentItemText, departmentText);
-
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
-
-                bw.write(this.departmentText);
-                bw.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            departmentNameField.setText("");
-
-        }else{
-            department.departmentID = departmentList.size() + 1;
+        } else {
+            Department department = new Department();
+            department.departmentID = (departmentList.get(departmentList.size() - 1).departmentID) + 1;
             department.departmentName = departmentNameField.getText();
 
-            departmentText = department.departmentID + ";" + department.departmentName + ";\n";
-
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv", true));
-
-                bw.write(departmentText);
-                bw.close();
-
-                departmentList.add(department);
-                departmentListView.setItems(departmentList);
-                departmentListView.refresh();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            departmentList.add(department);
         }
+        Department.printToFile(departmentList);
+        this.currentDepartment = null;
+        departmentNameField.clear();
     }
 
     public void cancelClicked() {

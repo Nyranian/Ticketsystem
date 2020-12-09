@@ -4,11 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Status {
     public String statusName;
     public int statusID;
+
+    private static String statusText;
 
 
     @Override
@@ -16,9 +20,14 @@ public class Status {
         return statusName;
     }
 
+    public  String newCSVLine(){
+        return statusID + ";" + statusName + "\n";
+    }
+
 
     public static ObservableList<Status> openFile(){
         String s = "";
+        statusText = "";
         ObservableList<Status> result = FXCollections.observableArrayList();
 
         try {
@@ -31,6 +40,8 @@ public class Status {
                 status.statusName = words[1];
                 status.statusID = Integer.parseInt(words[0]);
 
+                statusText += status.statusID + ";" + status.statusName + ";\n";
+
                 result.add(status);
             }
             br.close();
@@ -41,5 +52,19 @@ public class Status {
 
         return result;
     }
+
+    public static void printToFile(ObservableList<Status> statusList){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
+            for (Status s : statusList) {
+                bw.write(s.newCSVLine());
+            }
+            bw.flush();
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
