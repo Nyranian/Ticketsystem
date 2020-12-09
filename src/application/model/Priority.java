@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Priority {
     public String priorityName;
@@ -20,7 +22,6 @@ public class Priority {
     public static ObservableList<Priority> openFile(){
         String s;
         ObservableList<Priority> result = FXCollections.observableArrayList();
-
 
         try {
             try (BufferedReader br = new BufferedReader(new FileReader("priorities.csv"))) {
@@ -43,5 +44,17 @@ public class Priority {
 
         return result;
     }
+    public static void printToFile(ObservableList<Priority> priorityList){
+
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("priorities.csv"));
+            for (Priority p : priorityList) {
+                bw.write(p.newCSVLine());
+            }
+            bw.flush();
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }}
 
 }

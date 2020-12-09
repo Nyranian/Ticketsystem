@@ -9,9 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 
 public class PriorityController {
@@ -59,22 +57,10 @@ public class PriorityController {
 
                 System.out.println("Neue Priorität");
         }
-        printToFile();
+        Priority.printToFile(priorityList);
         this.selectedPriority = null;
         priorityTextField.clear();
-
     }
 
-    private void printToFile() {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("priorities.csv"));
-            for (Priority p : priorityList) {
-                bw.write(p.newCSVLine());
-            }
-            bw.flush();
-            bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 }
