@@ -21,27 +21,7 @@ public class DepartmentController {
     int currentIndex;
 
     public void initialize(){
-        String s = "";
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("departments.csv"));
-
-            while ((s = br.readLine()) != null) {
-                String[] words = s.split(";");
-
-                Department department = new Department();
-                department.departmentName = words[1];
-                department.departmentID = Integer.parseInt(words[0]);
-
-                departmentText += department.departmentID + ";" + department.departmentName + ";\n";
-
-                departmentList.add(department);
-            }
-            br.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        departmentList = Department.openFile();
 
         departmentListView.setItems(departmentList);
     }

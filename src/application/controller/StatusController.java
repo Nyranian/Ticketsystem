@@ -3,7 +3,6 @@ package application.controller;
 import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -15,37 +14,15 @@ public class StatusController {
     public ListView<Status> statusListView;
     public TextField statusNameField;
     public Button cancelButton;
-    String statusText = "";
     String currentItemText;
     int currentIndex;
+    String statusText = "";
 
     ObservableList<Status> statusList = FXCollections.observableArrayList();
 
     public void initialize() {
-        String s = "";
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("stati.csv"));
-
-            while ((s = br.readLine()) != null) {
-                String[] words = s.split(";");
-
-                Status status = new Status();
-                status.statusName = words[1];
-                status.statusID = Integer.parseInt(words[0]);
-
-                statusText += status.statusID + ";" + status.statusName + ";\n";
-
-                statusList.add(status);
-            }
-            br.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        statusList = Status.openFile();
         statusListView.setItems(statusList);
-
     }
 
     public void statusItemClicked() {
