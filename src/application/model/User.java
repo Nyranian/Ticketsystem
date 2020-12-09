@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 
 public class User {
     public String userID="";
@@ -50,5 +52,17 @@ public class User {
             e.printStackTrace();
         }
         return result;
+    }
+    public static void printToFile(ObservableList<User> userList){
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
+            for (User u : userList) {
+                bw.write(u.newCSVLine());
+            }
+            bw.flush();
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
