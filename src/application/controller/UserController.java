@@ -61,22 +61,13 @@ public class UserController {
 
             System.out.println("Neue Priorität");
         }
-        printToFile();
+        User.printToFile(userList);
         this.selectedUser = null;
         userNameTextfield.clear();
 
     }
     private void printToFile() {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
-            for (User u : userList) {
-                bw.write(u.newCSVLine());
-            }
-            bw.flush();
-            bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void cancelClicked(ActionEvent actionEvent) {
@@ -94,7 +85,7 @@ public class UserController {
             userPlaceTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlace);
             userPlzTextfield.setText(String.valueOf(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlz));
             userStreetTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userStreet);
-            //userDepartmentCombobox.setItems(userList.get(userListView.getSelectionModel().getSelectedIndex()));
+            //userDepartmentCombobox.
         }
     }
 }
