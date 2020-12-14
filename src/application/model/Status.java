@@ -37,8 +37,8 @@ public class Status {
                 String[] words = s.split(";");
 
                 Status status = new Status();
-                status.statusName = words[1];
                 status.statusID = Integer.parseInt(words[0]);
+                status.statusName = words[1];
 
                 statusText += status.statusID + ";" + status.statusName + ";\n";
 
