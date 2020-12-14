@@ -44,6 +44,10 @@ public class Controller {
         Parent root = loader.loadFXML("view/ticket.fxml");
         contentPane.getChildren().add(root);
 
+        ticketListView.getSelectionModel()
+
         TicketController controller = (TicketController) loader.getController();
+
+
     }
 }
