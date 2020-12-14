@@ -1,14 +1,11 @@
 package application.controller;
 
 import application.MyFXMLLoader;
-import application.model.Status;
 import application.model.Ticket;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -18,8 +15,6 @@ public class Controller {
 
     public ListView<Ticket> ticketListView;
     public AnchorPane contentPane;
-
-    public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
 
     public void editStatiClicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
@@ -50,15 +45,13 @@ public class Controller {
         Parent root = loader.loadFXML("view/ticket.fxml");
         contentPane.getChildren().add(root);
 
-        TicketController controller = (TicketController) loader.getController();
-
+        TicketController ticketController = (TicketController) loader.getController();
         Ticket selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
+        ticketController.setTicket(selectedTicket);
 
-        controller.ticketNameField.setText(selectedTicket.Name);
-        controller.ticketDescField.setText(selectedTicket.Beschreibung);
     }
 
     public void initialize(){
-        ticketListView.setItems(Ticket.loadTicketFile());
+        ticketListView.setItems(Ticket.openFile());
     }
 }
