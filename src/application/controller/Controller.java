@@ -3,8 +3,17 @@ package application.controller;
 import application.MyFXMLLoader;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.ParallelCamera;
+import javafx.scene.Parent;
+import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 public class Controller {
+
+    public ListView ticketListView;
+    public AnchorPane contentPane;
 
     public void editStatiClicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
@@ -28,5 +37,13 @@ public class Controller {
     public void editDepartmentClicked() {
         MyFXMLLoader loader = new MyFXMLLoader();
         loader.loadFXML("view/department.fxml", "Abteilungen bearbeiten");
+    }
+
+    public void ticketListViewClicked(MouseEvent mouseEvent) {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        Parent root = loader.loadFXML("view/ticket.fxml");
+        contentPane.getChildren().add(root);
+
+        TicketController controller = (TicketController) loader.getController();
     }
 }
