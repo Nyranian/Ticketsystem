@@ -1,15 +1,12 @@
 package application.controller;
 
 import application.model.Department;
-import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.io.*;
 
 public class DepartmentController {
     public ListView departmentListView;
@@ -18,14 +15,12 @@ public class DepartmentController {
     public Button cancelButton;
     public ObservableList<Department> departmentList = FXCollections.observableArrayList();
 
-    String departmentText = "";
     String currentItemText;
     int currentIndex;
     Department currentDepartment;
 
     public void initialize(){
         departmentList = Department.openFile();
-
         departmentListView.setItems(departmentList);
     }
 
