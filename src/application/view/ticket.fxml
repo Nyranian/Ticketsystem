@@ -17,7 +17,7 @@
    <Label layoutX="23.0" layoutY="50.0" prefHeight="17.0" prefWidth="78.0" text="Beschreibung" AnchorPane.leftAnchor="23.0" AnchorPane.topAnchor="50.0" />
    <Label layoutX="28.0" layoutY="161.0" text="Auftrag" AnchorPane.leftAnchor="28.0" />
    <ComboBox fx:id="ticketOrderComboBox" layoutX="100.0" layoutY="157.0" prefHeight="25.0" prefWidth="278.0" AnchorPane.rightAnchor="27.0" />
-   <ComboBox fx:id="ticketStatuComboBox" layoutX="100.0" layoutY="188.0" prefHeight="25.0" prefWidth="278.0" AnchorPane.rightAnchor="27.0" />
+   <ComboBox fx:id="ticketStatusComboBox" layoutX="100.0" layoutY="188.0" prefHeight="25.0" prefWidth="278.0" AnchorPane.rightAnchor="27.0" />
    <ComboBox layoutX="100.0" layoutY="221.0" prefHeight="25.0" prefWidth="278.0" AnchorPane.rightAnchor="27.0" />
    <Label layoutX="25.0" layoutY="192.0" prefHeight="17.0" prefWidth="40.0" text="Status" AnchorPane.leftAnchor="28.0" />
    <Label layoutX="27.0" layoutY="225.0" text="Priorität" AnchorPane.leftAnchor="28.0" />
