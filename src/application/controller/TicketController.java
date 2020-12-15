@@ -26,9 +26,11 @@ public class TicketController {
     }
 
     public void setTicket(Ticket ticket){
-        ticketNameField.setText(ticket.ticketName);
-        ticketDescField.setText(ticket.ticketBeschreibung);
         selectedTicket = ticket;
+        if(this.selectedTicket != null){
+            ticketNameField.setText(ticket.ticketName);
+            ticketDescField.setText(ticket.ticketBeschreibung);
+        }
     }
 
 

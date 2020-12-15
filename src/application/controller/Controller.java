@@ -7,6 +7,7 @@ import application.model.Ticket;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
@@ -25,6 +26,7 @@ public class Controller {
     public ComboBox priorityFilterBox;
 
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
+
 
 
     public void editStatiClicked(ActionEvent actionEvent) {
@@ -59,67 +61,38 @@ public class Controller {
         TicketController controller = (TicketController) loader.getController();
 
         Ticket selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
-
-        controller.ticketNameField.setText(selectedTicket.Name);
-        controller.ticketDescField.setText(selectedTicket.Beschreibung);
+        if(selectedTicket != null){
+            controller.ticketNameField.setText(selectedTicket.ticketName);
+            controller.ticketDescField.setText(selectedTicket.ticketBeschreibung);
+        }
     }
 
     public void initialize(){
-        ticketListView.setItems(Ticket.loadTicketFile());
-        ticketList = Ticket.loadTicketFile();
+        ticketListView.setItems(Ticket.openFile());
+        ticketList = Ticket.openFile();
         statusFilterBox.setItems(Status.openFile());
         priorityFilterBox.setItems(Priority.openFile());
     }
 
 
-    public void searchFieldEntered(KeyEvent actionEvent) {
+    public void FilterClicked(KeyEvent actionEvent) {
         String searchFieldContent = ticketNameSearchField.getText();
-        ObservableList<Ticket> searchList = FXCollections.observableArrayList();
+        ObservableList<Ticket> filter = ticketList;
 
-        ticketListView.getItems().clear();
+        Status s = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
+        Priority p = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
 
-        if(searchFieldContent != null){
-            for (Ticket t : ticketList) {
-                if(t.Name.toLowerCase().contains(searchFieldContent.toLowerCase())){
-                    searchList.add(t);
-                }
-            }
-            ticketListView.setItems(searchList);
-            ticketList = searchList;
+        if(s != null && s.statusID > 0) {
+            filter.removeIf(ticket ->  ticket.Status.statusID != s.statusID);
         }
+        if(s != null && s.statusID > 0) {
+            filter.removeIf(ticket ->  ticket.Priority.priorityID != p.priorityID);
+        }
+        if(searchFieldContent != null && searchFieldContent.length() > 0){
+            filter.removeIf(ticket ->  !ticket.ticketName.toLowerCase().contains(searchFieldContent.toLowerCase()));
+        }
+        ticketListView.setItems(filter);
+        ticketListView.refresh();
     }
 
-    public void statusFilterClicked(ActionEvent mouseEvent) {
-        String statusFilterContent = statusFilterBox.getSelectionModel().getSelectedItem().toString();
-        ObservableList<Ticket> statusSearchList = FXCollections.observableArrayList();
-
-        ticketListView.getItems().clear();
-
-        if(statusFilterContent != null){
-            for (Ticket t : ticketList) {
-                if(t.Status.statusName.toLowerCase().contains(statusFilterContent.toLowerCase())){
-                    statusSearchList.add(t);
-                }
-            }
-            ticketListView.setItems(statusSearchList);
-            ticketList = statusSearchList;
-        }
-    }
-
-    public void priorityFilterClicked(ActionEvent contextMenuEvent) {
-        String priorityFilterContent = priorityFilterBox.getSelectionModel().getSelectedItem().toString();
-        ObservableList<Ticket> prioritySearchList = FXCollections.observableArrayList();
-
-        ticketListView.getItems().clear();
-
-        if(priorityFilterContent != null){
-            for (Ticket t : ticketList) {
-                if(t.Priority.priorityName.toLowerCase().contains(priorityFilterContent.toLowerCase())){
-                    prioritySearchList.add(t);
-                }
-            }
-            ticketListView.setItems(prioritySearchList);
-            ticketList = prioritySearchList;
-        }
-    }
 }
