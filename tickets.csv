@@ -1,2 +1,5 @@
-1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;null
-2;Fertigstellen ToDo-System;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;null
+1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
+2;Kot säubern;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;2;3
+3;dsa Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;3
+4;fff Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;1;4
+5;Fertigstellen ToDo-System;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;2;3
