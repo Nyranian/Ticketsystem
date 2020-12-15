@@ -1,0 +1,2 @@
+1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;null
+2;Fertigstellen ToDo-System;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;null
