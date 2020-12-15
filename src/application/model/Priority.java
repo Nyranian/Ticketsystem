@@ -10,7 +10,7 @@ import java.io.FileWriter;
 
 public class Priority {
     public String priorityName;
-    public  String priorityID;
+    public  int priorityID;
     @Override
     public String toString() {
         return priorityName;
@@ -31,7 +31,7 @@ public class Priority {
                     Priority priority = new Priority();
 
                     String[] words = s.split(";");
-                    priority.priorityID = words[0];
+                    priority.priorityID = Integer.parseInt(words[0]);
                     priority.priorityName = words[1];
 
                     result.add(priority); // füge Priorität zur Liste hinzu

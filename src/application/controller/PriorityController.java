@@ -47,7 +47,7 @@ public class PriorityController {
                 // erzeuge neuen Priorität, füge ihn in die ListView ein
                 // und speichere alles in die Datei
                 Priority priority = new Priority(); //neuer Speicherplatz für artikel wird reserviert
-                priority.priorityID = String.valueOf(Integer.parseInt(priorityList.get(priorityList.size() - 1).priorityID) + 1);
+                priority.priorityID = priorityList.get(priorityList.size() - 1).priorityID + 1;
                 priority.priorityName = priorityTextField.getText();
 
                 priorityList.add(priority);

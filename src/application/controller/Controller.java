@@ -7,7 +7,6 @@ import application.model.Ticket;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
@@ -16,6 +15,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+
+import javax.xml.bind.Marshaller;
+import java.awt.event.ActionListener;
+import java.io.FileWriter;
 
 public class Controller {
 
@@ -26,6 +29,7 @@ public class Controller {
     public ComboBox priorityFilterBox;
 
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
+    public ObservableList<Ticket> ticketListCopy = FXCollections.observableArrayList();
 
 
 
@@ -70,29 +74,44 @@ public class Controller {
     public void initialize(){
         ticketListView.setItems(Ticket.openFile());
         ticketList = Ticket.openFile();
+        ticketListCopy = ticketList;
         statusFilterBox.setItems(Status.openFile());
         priorityFilterBox.setItems(Priority.openFile());
     }
 
 
-    public void FilterClicked(KeyEvent actionEvent) {
+    public void Filter() {
         String searchFieldContent = ticketNameSearchField.getText();
         ObservableList<Ticket> filter = ticketList;
+
+        ticketNameSearchField.textProperty().addListener(TextFieldListener -> {
+
+        });
 
         Status s = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
         Priority p = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
 
-        if(s != null && s.statusID > 0) {
-            filter.removeIf(ticket ->  ticket.Status.statusID != s.statusID);
+        if(s != null && s.statusName != null) {
+            filter.removeIf(ticket ->  !ticket.Status.statusName.equals(s.statusName));
         }
-        if(s != null && s.statusID > 0) {
-            filter.removeIf(ticket ->  ticket.Priority.priorityID != p.priorityID);
+        if(p != null && p.priorityName != null) {
+            filter.removeIf(ticket ->  !ticket.Priority.priorityName.equals(p.priorityName));
         }
         if(searchFieldContent != null && searchFieldContent.length() > 0){
             filter.removeIf(ticket ->  !ticket.ticketName.toLowerCase().contains(searchFieldContent.toLowerCase()));
         }
         ticketListView.setItems(filter);
+        ticketList = filter;
         ticketListView.refresh();
     }
 
+    public void ComboBoxFilter(ActionEvent actionEvent) {
+        Filter();
+    }
+
+    public void TextFileFilter(KeyEvent keyEvent) {
+        Filter();
+    }
 }
+
+
