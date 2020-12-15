@@ -26,7 +26,7 @@ public class UserController {
 
 
     public void initialize() {
-        userList =User.openFile();
+        userList = User.openFile();
         userListView.setItems(userList);
 
     }
