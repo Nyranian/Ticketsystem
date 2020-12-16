@@ -72,5 +72,11 @@ public class TicketController {
 
 
     public void closeClicked(ActionEvent actionEvent) {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        Parent root = loader.loadFXML("view/scene.fxml");
+        Controller c = (Controller) loader.getController();
+        c.contentPane.getChildren().clear();
+        c.ticketListView.refresh();
+        System.out.println("HHHHHHHHHHHHHHHHH");
     }
 }

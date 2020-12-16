@@ -7,6 +7,7 @@ import application.model.Ticket;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
@@ -26,6 +27,8 @@ public class Controller {
 
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
     public ObservableList<Ticket> ticketListCopy = FXCollections.observableArrayList();
+    FilteredList<Ticket> filteredList = new FilteredList<>(ticketList, s -> true);
+
 
     public TicketController active;
 
@@ -73,7 +76,7 @@ public class Controller {
 
     public void initialize(){
         ticketListView.setItems(Ticket.openFile());
-        ticketList = Ticket.openFile();
+        ticketList.setAll(ticketListView.getItems());
         ticketListCopy = ticketList;
         statusFilterBox.setItems(Status.openFile());
         priorityFilterBox.setItems(Priority.openFile());
@@ -81,16 +84,12 @@ public class Controller {
 
 
     public void Filter() {
-        String searchFieldContent = ticketNameSearchField.getText();
-        ObservableList<Ticket> filter = ticketList;
+       String searchFieldContent = ticketNameSearchField.getText();
+        //ObservableList<Ticket> filter = ticketList;
+        Status sss = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
+        Priority ppp = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
 
-        ticketNameSearchField.textProperty().addListener(TextFieldListener -> {
-
-        });
-
-        Status s = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
-        Priority p = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
-
+        /*
         if(s != null && s.statusName != null) {
             filter.removeIf(ticket ->  !ticket.Status.statusName.equals(s.statusName));
         }
@@ -101,8 +100,24 @@ public class Controller {
             filter.removeIf(ticket ->  !ticket.ticketName.toLowerCase().contains(searchFieldContent.toLowerCase()));
         }
         ticketListView.setItems(filter);
-        ticketList = filter;
-        ticketListView.refresh();
+        */
+
+        ticketNameSearchField.textProperty().addListener(obs -> {
+            String filter = ticketNameSearchField.getText();
+            if (filter == null || filter.length() == 0) {
+                filteredList.setPredicate(s -> true);
+            } else {
+                filteredList.setPredicate((s -> s.toString().toLowerCase().contains(filter.toLowerCase())));
+                //filteredList.removeIf(s -> s.Status.statusName.equals(sss.statusName));
+                //filteredList.removeIf((s-> s.Priority.priorityName.equals(ppp.priorityName)));
+
+                //filteredList.removeIf(ticket ->  !ticket.Status.statusName.equals(sss.statusName));
+                //filteredList.removeIf(ticket ->  !ticket.Priority.priorityName.equals(ppp.priorityName));
+                //filteredList.removeIf(ticket ->  !ticket.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
+            }
+        });
+        ticketListView.setItems(filteredList);
+
     }
 
     public void ComboBoxFilter(ActionEvent actionEvent) {
