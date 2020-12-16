@@ -1,22 +1,26 @@
 package application.controller;
 
 import application.MyFXMLLoader;
+import application.model.Priority;
+import application.model.Status;
 import application.model.Ticket;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
-import java.lang.reflect.InvocationTargetException;
 
 
 public class TicketController {
     public TextField ticketNameField;
     public TextArea ticketDescField;
-    public  Ticket selectedTicket = null;
+    public Ticket selectedTicket = null;
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
+    public ComboBox ticketOrderComboBox;
+    public ComboBox<Status> ticketStatusComboBox;
+    public ComboBox<Priority> ticketPriorityComboBox;
 
 
     public void initialize(){
@@ -26,12 +30,27 @@ public class TicketController {
     }
 
     public void setTicket(Ticket ticket){
-        /*selectedTicket = ticket;
-        if(this.selectedTicket != null){
-            ticketNameField.setText(ticket.ticketName);
-            ticketDescField.setText(ticket.ticketBeschreibung);
+        selectedTicket = ticket;
+
+        ticketNameField.setText(ticket.ticketName);
+        ticketDescField.setText(ticket.ticketBeschreibung);
+        ticketStatusComboBox.setItems(Status.openFile());
+        ticketPriorityComboBox.setItems(Priority.openFile());
+
+        for (Status s : ticketStatusComboBox.getItems()) {
+            if (s.statusID == ticket.Status.statusID) {
+                ticketStatusComboBox.getSelectionModel().select(s);
+                break;
+            }
         }
-         */
+
+        for (Priority p : ticketPriorityComboBox.getItems()) {
+            if ( p.priorityID == ticket.Priority.priorityID) {
+                ticketPriorityComboBox.getSelectionModel().select(p);
+                break;
+            }
+        }
+
 
     }
 

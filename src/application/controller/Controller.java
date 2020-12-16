@@ -65,7 +65,7 @@ public class Controller {
         TicketController controller = (TicketController) loader.getController();
 
         Ticket selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
-        if(selectedTicket != null){
+        if (selectedTicket != null) {
             controller.ticketNameField.setText(selectedTicket.ticketName);
             controller.ticketDescField.setText(selectedTicket.ticketBeschreibung);
         }
@@ -74,7 +74,7 @@ public class Controller {
         active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
     }
 
-    public void initialize(){
+    public void initialize() {
         ticketListView.setItems(Ticket.openFile());
         ticketList.setAll(ticketListView.getItems());
         ticketListCopy = ticketList;
@@ -84,7 +84,7 @@ public class Controller {
 
 
     public void Filter() {
-       String searchFieldContent = ticketNameSearchField.getText();
+        String searchFieldContent = ticketNameSearchField.getText();
         //ObservableList<Ticket> filter = ticketList;
         Status sss = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
         Priority ppp = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
@@ -124,7 +124,7 @@ public class Controller {
         Filter();
     }
 
-    public void TextFileFilter(KeyEvent keyEvent) {
+    public void TextFieldFilter(KeyEvent keyEvent) {
         Filter();
     }
 
@@ -137,6 +137,26 @@ public class Controller {
     public void saveClicked(ActionEvent actionEvent) {
         // Wenn Ticket neu -> laden des Ticekts und hinzufügen zur Liste!
         // Datei aktualisieren
+        MyFXMLLoader loader = new MyFXMLLoader();
+        loader.loadFXML("view/ticket.fxml");
+
+        TicketController controller = (TicketController) loader.getController();
+        Ticket t = new Ticket();
+
+        if (controller.selectedTicket == null) {
+            t.ticketName = controller.ticketNameField.getText();
+            t.ticketBeschreibung = controller.ticketDescField.getText();
+            t.ticketID = 69;
+            t.Status.statusName = "TestStatus";
+            t.Status.statusID = 69;
+            t.Priority.priorityName = "TestPriority";
+            t.Priority.priorityID = 69;
+
+            ticketList.add(t);
+            Ticket.printToFile(ticketList);
+        }
+
+
     }
 
     public void newClicked(ActionEvent actionEvent) {
