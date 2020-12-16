@@ -16,10 +16,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import javax.xml.bind.Marshaller;
-import java.awt.event.ActionListener;
-import java.io.FileWriter;
-
 public class Controller {
 
     public ListView<Ticket> ticketListView;
@@ -31,6 +27,7 @@ public class Controller {
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
     public ObservableList<Ticket> ticketListCopy = FXCollections.observableArrayList();
 
+    public TicketController active;
 
 
     public void editStatiClicked(ActionEvent actionEvent) {
@@ -69,6 +66,9 @@ public class Controller {
             controller.ticketNameField.setText(selectedTicket.ticketName);
             controller.ticketDescField.setText(selectedTicket.ticketBeschreibung);
         }
+
+        active = (TicketController) loader.getController();
+        active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
     }
 
     public void initialize(){
@@ -112,6 +112,31 @@ public class Controller {
     public void TextFileFilter(KeyEvent keyEvent) {
         Filter();
     }
+
+    public void deleteClicked(ActionEvent actionEvent) {
+        // Laden des Tickets
+        // Entfernen aus Listview
+        // Datei aktualisieren
+    }
+
+    public void saveClicked(ActionEvent actionEvent) {
+        // Wenn Ticket neu -> laden des Ticekts und hinzufügen zur Liste!
+        // Datei aktualisieren
+    }
+
+    public void newClicked(ActionEvent actionEvent) {
+        MyFXMLLoader loader = new MyFXMLLoader();
+        Parent root = loader.loadFXML("view/ticket.fxml");
+        AnchorPane.setBottomAnchor(root, 0.0);
+        AnchorPane.setTopAnchor(root, 0.0);
+        AnchorPane.setLeftAnchor(root, 0.0);
+        AnchorPane.setRightAnchor(root, 0.0);
+        contentPane.getChildren().add(root);
+
+        active = (TicketController) loader.getController();
+        active.setTicket(null);
+    }
+
 }
 
 
