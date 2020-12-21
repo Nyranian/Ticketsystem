@@ -65,6 +65,9 @@ public class Controller {
         active = (TicketController) loader.getController();
 
         selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
+        selectedTicket.Status.statusID = ticketListView.getSelectionModel().getSelectedIndex() + 1;
+        selectedTicket.Priority.priorityID = ticketListView.getSelectionModel().getSelectedIndex() + 1;
+
         if (selectedTicket != null) {
             active.setTicket(selectedTicket);
         }
