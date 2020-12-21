@@ -5,9 +5,9 @@ import application.model.Priority;
 import application.model.Status;
 import application.model.Ticket;
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
@@ -17,17 +17,18 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
+import java.util.ArrayList;
+
 public class Controller {
 
     public ListView<Ticket> ticketListView;
     public AnchorPane contentPane;
     public TextField ticketNameSearchField;
-    public ComboBox statusFilterBox;
-    public ComboBox priorityFilterBox;
+    public ComboBox<Status> statusFilterBox;
+    public ComboBox<Priority> priorityFilterBox;
+    public ArrayList<Ticket> allTickets;
 
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
-
-
     public TicketController active;
 
 
@@ -74,28 +75,53 @@ public class Controller {
     public void initialize() {
         ticketListView.setItems(Ticket.openFile());
         ticketList.setAll(ticketListView.getItems());
-        statusFilterBox.setItems(Status.openFile());
-        priorityFilterBox.setItems(Priority.openFile());
+
+        ObservableList<Status> stati = Status.openFile();
+        Status s = new Status();
+        s.statusName = "Status wählen";
+        s.statusID = -1;
+        stati.add(0, s);
+        statusFilterBox.setItems(stati);
+        statusFilterBox.getSelectionModel().select(s);
+
+        ObservableList<Priority> priority = Priority.openFile();
+        Priority p = new Priority();
+        p.priorityName = "Priorität wählen";
+        p.priorityID = -1;
+        priority.add(0, p);
+        priorityFilterBox.setItems(priority);
+        priorityFilterBox.getSelectionModel().select(p);
+
+        allTickets = new ArrayList<>(ticketListView.getItems());
     }
 
 
     public void Filter() {
-        ObservableList<Ticket> filter = ticketList;
-        Status s = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
-        Priority p = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
+        ObservableList<Ticket> filter = FXCollections.observableArrayList(allTickets);
+        Status s = statusFilterBox.getSelectionModel().getSelectedItem();
+        Priority p = priorityFilterBox.getSelectionModel().getSelectedItem();
+        String tmp = ticketNameSearchField.getText();
 
         if (s != null && s.statusName != null) {
-            filter.removeIf(ticket -> !ticket.Status.statusName.equals(s.statusName));
+            if(!(statusFilterBox.getSelectionModel().getSelectedItem().statusName.equals("Status wählen"))){
+                filter.removeIf(t -> !t.Status.statusName.equals(s.statusName));
+            }else {
+                filter = FXCollections.observableArrayList(allTickets);
+            }
         }
         if (p != null && p.priorityName != null) {
-            filter.removeIf(ticket -> !ticket.Priority.priorityName.equals(p.priorityName));
+            if(!(statusFilterBox.getSelectionModel().getSelectedItem().statusName.equals("Priorität wählen"))){
+                filter.removeIf(t -> !t.Priority.priorityName.equals(p.priorityName));
+            }else{
+                filter = FXCollections.observableArrayList(allTickets);
+            }
         }
-
-        if (ticketNameSearchField != null && ticketNameSearchField.getText().length() > 0) {
-            filter.removeIf(ticket -> !ticket.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
+        if (ticketNameSearchField != null && !tmp.equals("") && tmp.length() > 0) {
+            filter.removeIf(t -> !(t.ticketName.toLowerCase().equals(ticketNameSearchField.getText().toLowerCase())));
+        }else{
+            filter = FXCollections.observableArrayList(allTickets);
         }
         ticketListView.setItems(filter);
-
     }
 
     public void ComboBoxFilter(ActionEvent actionEvent) {
