@@ -17,9 +17,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.ArrayList;
-import java.util.Objects;
-
 public class Controller {
 
     public ListView<Ticket> ticketListView;
@@ -29,8 +26,6 @@ public class Controller {
     public ComboBox priorityFilterBox;
 
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
-    public ObservableList<Ticket> ticketListCopy = FXCollections.observableArrayList();
-    FilteredList<Ticket> filteredList = new FilteredList<>(ticketList, s -> true);
 
 
     public TicketController active;
@@ -79,77 +74,27 @@ public class Controller {
     public void initialize() {
         ticketListView.setItems(Ticket.openFile());
         ticketList.setAll(ticketListView.getItems());
-        ticketListCopy = ticketList;
         statusFilterBox.setItems(Status.openFile());
         priorityFilterBox.setItems(Priority.openFile());
     }
 
 
     public void Filter() {
-        //String searchFieldContent = ticketNameSearchField.getText();
-        //ObservableList<Ticket> filter = ticketList;
-        /*
-        if(s != null && s.statusName != null) {
-            ticketArrayList.removeIf(ticket ->  !ticket.Status.statusName.equals(s.statusName));
+        ObservableList<Ticket> filter = ticketList;
+        Status s = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
+        Priority p = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
+
+        if (s != null && s.statusName != null) {
+            filter.removeIf(ticket -> !ticket.Status.statusName.equals(s.statusName));
         }
-        if(p != null && p.priorityName != null) {
-            ticketArrayList.removeIf(ticket ->  !ticket.Priority.priorityName.equals(p.priorityName));
+        if (p != null && p.priorityName != null) {
+            filter.removeIf(ticket -> !ticket.Priority.priorityName.equals(p.priorityName));
         }
 
-        if(searchFieldContent != null && searchFieldContent.length() > 0){
-            ticketArrayList.removeIf(ticket ->  !ticket.ticketName.toLowerCase().contains(searchFieldContent.toLowerCase()));
+        if (ticketNameSearchField != null && ticketNameSearchField.getText().length() > 0) {
+            filter.removeIf(ticket -> !ticket.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
         }
-        ticketListView.setItems((ObservableList<Ticket>) ticketArrayList);
-         */
-
-        Status sss = (Status) statusFilterBox.getSelectionModel().getSelectedItem();
-        Priority ppp = (Priority) priorityFilterBox.getSelectionModel().getSelectedItem();
-
-        ticketNameSearchField.textProperty().addListener(obs -> {
-            String filter = ticketNameSearchField.getText();
-            if (filter == null || filter.length() == 0) {
-                filteredList.setPredicate(s -> true);
-                //filteredList.addAll(ticketList);
-            } else {
-                //filteredList.removeIf(s -> !s.ticketName.toLowerCase().contains((filter.toLowerCase())));
-                filteredList.setPredicate((s -> s.toString().toLowerCase().contains(filter.toLowerCase())));
-            }
-        });
-        priorityFilterBox.getSelectionModel().selectedItemProperty().addListener(obs -> {
-            if(ppp != null && ppp.priorityName != null) {
-                //filteredList.removeIf(s -> !(s.Priority.priorityName.equals(ppp.priorityName)));
-                filteredList.setPredicate(s -> s.Priority.priorityName.equals(ppp.priorityName));
-            }else{
-                filteredList.setPredicate(s -> true);
-            }
-        });
-        statusFilterBox.getSelectionModel().selectedItemProperty().addListener(obs -> {
-            if(sss != null && sss.statusName != null) {
-                //filteredList.removeIf(s -> !s.Status.statusName.equals(sss.statusName));
-                filteredList.setPredicate(s -> s.Status.statusName.equals(sss.statusName));
-            }else{
-                filteredList.setPredicate(s -> true);
-            }
-        });
-
-        /**
-        statusFilterBox.valueProperty().addListener(obs -> {
-            if(sss != null && sss.statusName != null) {
-                filteredList.setPredicate(s -> s.Status.statusName.equals(sss.statusName));
-            }else{
-                filteredList.setPredicate(s -> true);
-            }
-        });
-         */
-
-        //filteredList.removeIf(s -> s.Status.statusName.equals(sss.statusName));
-        //filteredList.removeIf((s-> s.Priority.priorityName.equals(ppp.priorityName)));
-
-        //filteredList.removeIf(ticket ->  !ticket.Status.statusName.equals(sss.statusName));
-        //filteredList.removeIf(ticket ->  !ticket.Priority.priorityName.equals(ppp.priorityName));
-        //filteredList.removeIf(ticket ->  !ticket.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
-
-        ticketListView.setItems(filteredList);
+        ticketListView.setItems(filter);
 
     }
 
