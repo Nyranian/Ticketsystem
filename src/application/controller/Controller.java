@@ -5,7 +5,6 @@ import application.model.Priority;
 import application.model.Status;
 import application.model.Ticket;
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -99,27 +98,28 @@ public class Controller {
         ObservableList<Ticket> filter = FXCollections.observableArrayList(allTickets);
         Status s = statusFilterBox.getSelectionModel().getSelectedItem();
         Priority p = priorityFilterBox.getSelectionModel().getSelectedItem();
-        String tmp = ticketNameSearchField.getText();
 
         if (s != null && s.statusName != null) {
-            if(!(statusFilterBox.getSelectionModel().getSelectedItem().statusName.equals("Status wählen"))){
+            if(!(statusFilterBox.getValue().statusName.equals("Status wählen"))){
                 filter.removeIf(t -> !t.Status.statusName.equals(s.statusName));
-            }else {
+            } else{
                 filter = FXCollections.observableArrayList(allTickets);
             }
         }
         if (p != null && p.priorityName != null) {
-            if(!(statusFilterBox.getSelectionModel().getSelectedItem().statusName.equals("Priorität wählen"))){
+            if(!(priorityFilterBox.getValue().priorityName.equals("Priorität wählen"))){
                 filter.removeIf(t -> !t.Priority.priorityName.equals(p.priorityName));
-            }else{
-                filter = FXCollections.observableArrayList(allTickets);
+            } else{
+              filter = FXCollections.observableArrayList(allTickets);
             }
         }
-        if (ticketNameSearchField != null && !tmp.equals("") && tmp.length() > 0) {
-            filter.removeIf(t -> !(t.ticketName.toLowerCase().equals(ticketNameSearchField.getText().toLowerCase())));
-        }else{
-            filter = FXCollections.observableArrayList(allTickets);
+        try{
+           filter.removeIf(t -> !t.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
         }
+
         ticketListView.setItems(filter);
     }
 

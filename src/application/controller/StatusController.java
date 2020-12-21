@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.model.Priority;
 import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,17 +8,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.*;
-
 public class StatusController {
     public ListView<Status> statusListView;
     public TextField statusNameField;
     public Button cancelButton;
-    Status currentStatus;
-    String currentItemText;
-    int currentIndex;
-    String statusText = "";
-
+    private  Status selectedStatus = null;
     ObservableList<Status> statusList = FXCollections.observableArrayList();
 
     public void initialize() {
@@ -28,31 +21,29 @@ public class StatusController {
     }
 
     public void statusItemClicked() {
-        if (statusListView.getSelectionModel().getSelectedItem() != null) {
+        Status selected = statusListView.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            this.selectedStatus = selected;
             statusNameField.setText(statusListView.getSelectionModel().getSelectedItem().toString());
-
-            currentIndex = statusListView.getSelectionModel().getSelectedIndex();
-            currentStatus = statusListView.getSelectionModel().getSelectedItem();
-
-            currentItemText = statusList.get(currentIndex).statusID + ";" + statusList.get(statusListView.getSelectionModel().getSelectedIndex()).statusName + ";\n";
         }
     }
 
     public void saveClicked() {
-        if (this.currentStatus != null) {
-            currentStatus.statusName = statusNameField.getText();
-
+        if (this.selectedStatus != null) {
+            selectedStatus.statusName = statusNameField.getText();
             statusListView.refresh();
-
+            System.out.println("Daten aktualisiert");
         } else {
             Status status = new Status();
             status.statusID = (statusList.get(statusList.size() - 1).statusID) + 1;
             status.statusName = statusNameField.getText();
 
             statusList.add(status);
+            System.out.println("Neuer Status");
         }
         Status.printToFile(statusList);
-        this.currentStatus = null;
+        this.selectedStatus = null;
         statusNameField.clear();
     }
 
