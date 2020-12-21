@@ -23,7 +23,7 @@ public class Ticket {
     }
 
     public  String newCSVLine(){
-        return ticketID + ";" + ticketName + ";" + ticketBeschreibung + ";" + Status.statusID + ";" + Priority.priorityID +"\n";
+        return ticketID + ";" + ticketName + ";" + ticketBeschreibung + ";" + Status.statusName + ";" + Priority.priorityName +"\n";
     }
 
     public static ObservableList<Ticket> openFile() {

@@ -32,27 +32,36 @@ public class TicketController {
     public void setTicket(Ticket ticket){
         selectedTicket = ticket;
 
-        ticketNameField.setText(ticket.ticketName);
-        ticketDescField.setText(ticket.ticketBeschreibung);
-        ticketStatusComboBox.setItems(Status.openFile());
-        ticketPriorityComboBox.setItems(Priority.openFile());
+        if(ticket != null) {
+            ticketNameField.setText(ticket.ticketName);
+            ticketDescField.setText(ticket.ticketBeschreibung);
+            ticketStatusComboBox.setItems(Status.openFile());
+            ticketPriorityComboBox.setItems(Priority.openFile());
 
-        for (Status s : ticketStatusComboBox.getItems()) {
-            if (s.statusID == ticket.Status.statusID) {
-                ticketStatusComboBox.getSelectionModel().select(s);
-                break;
+            for (Status s : Status.openFile()) {
+                if (s.statusID == ticket.Status.statusID) {
+                    ticketStatusComboBox.getSelectionModel().select(s.statusID-1);
+                    break;
+                }
             }
-        }
 
-        for (Priority p : ticketPriorityComboBox.getItems()) {
-            if ( p.priorityID == ticket.Priority.priorityID) {
-                ticketPriorityComboBox.getSelectionModel().select(p);
-                break;
+            for (Priority p : Priority.openFile()) {
+                if (p.priorityID == ticket.Priority.priorityID) {
+                    ticketPriorityComboBox.getSelectionModel().select(p.priorityID-1);
+                    break;
+                }
             }
+        }else{
+            ticketNameField.setText("");
+            ticketDescField.setText("");
+            ticketStatusComboBox.setItems(Status.openFile());
+            ticketPriorityComboBox.setItems(Priority.openFile());
         }
 
 
     }
+
+
 
     public Ticket getTicket(){
         selectedTicket.ticketName = ticketNameField.getText();

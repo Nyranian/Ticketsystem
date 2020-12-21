@@ -30,6 +30,7 @@ public class Controller {
 
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
     public TicketController active;
+    Ticket selectedTicket = new Ticket();
 
 
     public void editStatiClicked(ActionEvent actionEvent) {
@@ -59,16 +60,14 @@ public class Controller {
     public void ticketListViewClicked(MouseEvent mouseEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
         Parent root = loader.loadFXML("view/ticket.fxml");
+        contentPane.getChildren().clear();
         contentPane.getChildren().add(root);
 
-        TicketController controller = (TicketController) loader.getController();
+        active = (TicketController) loader.getController();
 
-        Ticket selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
+        selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
         if (selectedTicket != null) {
-            controller.ticketNameField.setText(selectedTicket.ticketName);
-            controller.ticketDescField.setText(selectedTicket.ticketBeschreibung);
-            active = (TicketController) loader.getController();
-            active.setTicket(ticketListView.getSelectionModel().getSelectedItem());
+            active.setTicket(selectedTicket);
         }
     }
 
@@ -133,34 +132,49 @@ public class Controller {
     }
 
     public void deleteClicked(ActionEvent actionEvent) {
-        // Laden des Tickets
-        // Entfernen aus Listview
-        // Datei aktualisieren
+        for (Ticket t1 : ticketList) {
+            if (t1.ticketID == ticketListView.getSelectionModel().getSelectedIndex() + 1) {
+                ticketList.remove(t1.ticketID - 1);
+
+                for (int i = 1; i <= ticketList.size();++i) {
+                    ticketList.get(i-1).ticketID = i;
+                }
+
+                Ticket.printToFile(ticketList);
+                ticketListView.setItems(ticketList);
+                ticketListView.refresh();
+                break;
+            }
+        }
     }
 
     public void saveClicked(ActionEvent actionEvent) {
-        // Wenn Ticket neu -> laden des Ticekts und hinzufügen zur Liste!
-        // Datei aktualisieren
         MyFXMLLoader loader = new MyFXMLLoader();
         loader.loadFXML("view/ticket.fxml");
 
-        TicketController controller = (TicketController) loader.getController();
-        Ticket t = new Ticket();
+        Ticket ticket = new Ticket();
+        ticket.Status = new Status();
+        ticket.Priority = new Priority();
 
-        if (controller.selectedTicket == null) {
-            t.ticketName = controller.ticketNameField.getText();
-            t.ticketBeschreibung = controller.ticketDescField.getText();
-            t.ticketID = 69;
-            t.Status.statusName = "TestStatus";
-            t.Status.statusID = 69;
-            t.Priority.priorityName = "TestPriority";
-            t.Priority.priorityID = 69;
+        ticket.ticketName = active.ticketNameField.getText();
+        ticket.ticketBeschreibung = active.ticketDescField.getText();
+        ticket.ticketID = ticketList.size() + 1;
+        ticket.Status.statusName = active.ticketStatusComboBox.getSelectionModel().getSelectedItem().toString();
+        ticket.Priority.priorityName = active.ticketPriorityComboBox.getSelectionModel().getSelectedItem().toString();
 
-            ticketList.add(t);
-            Ticket.printToFile(ticketList);
+        if (ticketListView.getSelectionModel().getSelectedItem() == null) {
+            ticketList.add(ticket);
+        } else {
+            for (Ticket t : ticketList) {
+                if (t.ticketID == ticketListView.getSelectionModel().getSelectedIndex()) {
+                    ticketList.set(t.ticketID, ticket);
+                }
+            }
         }
 
-
+        ticketListView.setItems(ticketList);
+        ticketListView.refresh();
+        Ticket.printToFile(ticketList);
     }
 
     public void newClicked(ActionEvent actionEvent) {
@@ -170,6 +184,8 @@ public class Controller {
         AnchorPane.setTopAnchor(root, 0.0);
         AnchorPane.setLeftAnchor(root, 0.0);
         AnchorPane.setRightAnchor(root, 0.0);
+
+        contentPane.getChildren().clear();
         contentPane.getChildren().add(root);
 
         active = (TicketController) loader.getController();
