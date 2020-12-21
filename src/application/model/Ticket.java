@@ -61,7 +61,7 @@ public class Ticket {
     }
     public static void printToFile(ObservableList<Ticket> ticketList){
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("ticket.csv"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("tickets.csv"));
             for (Ticket t: ticketList) {
                 bw.write(t.newCSVLine());
             }

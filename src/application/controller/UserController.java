@@ -85,7 +85,8 @@ public class UserController {
             userPlaceTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlace);
             userPlzTextfield.setText(String.valueOf(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlz));
             userStreetTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userStreet);
-            //userDepartmentCombobox.
+            userDepartmentCombobox.setItems(User.userDepartmentList);
+            userDepartmentCombobox.getSelectionModel().select(userListView.getSelectionModel().getSelectedIndex());
         }
     }
 }
