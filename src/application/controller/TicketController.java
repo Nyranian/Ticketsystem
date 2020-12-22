@@ -38,16 +38,16 @@ public class TicketController {
             ticketStatusComboBox.setItems(Status.openFile());
             ticketPriorityComboBox.setItems(Priority.openFile());
 
-            for (Status s : Status.openFile()) {
+            for (Status s : ticketStatusComboBox.getItems()) {
                 if (s.statusID == ticket.Status.statusID) {
-                    ticketStatusComboBox.getSelectionModel().select(s.statusID-1);
+                    ticketStatusComboBox.getSelectionModel().select(s);
                     break;
                 }
             }
 
-            for (Priority p : Priority.openFile()) {
+            for (Priority p : ticketPriorityComboBox.getItems()) {
                 if (p.priorityID == ticket.Priority.priorityID) {
-                    ticketPriorityComboBox.getSelectionModel().select(p.priorityID-1);
+                    ticketPriorityComboBox.getSelectionModel().select(p);
                     break;
                 }
             }
