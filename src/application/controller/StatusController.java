@@ -28,6 +28,9 @@ public class StatusController {
             statusNameField.setText(statusListView.getSelectionModel().getSelectedItem().toString());
         }
     }
+    public void cancelClicked() {
+        ((Stage) cancelButton.getScene().getWindow()).close();
+    }
 
     public void saveClicked() {
         if (this.selectedStatus != null) {
@@ -47,7 +50,4 @@ public class StatusController {
         statusNameField.clear();
     }
 
-    public void cancelClicked() {
-        ((Stage) cancelButton.getScene().getWindow()).close();
-    }
 }

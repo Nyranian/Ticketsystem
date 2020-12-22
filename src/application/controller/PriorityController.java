@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class PriorityController {
-    public ListView prioritylistView;
+    public ListView<Priority> prioritylistView;
     public TextField priorityTextField;
     public Button cancelButton;
     private Priority selectedPriority = null;
@@ -23,7 +23,7 @@ public class PriorityController {
     }
 
     public void priorityItemClicked() {
-        Priority selected = (Priority) prioritylistView.getSelectionModel().getSelectedItem();
+        Priority selected = prioritylistView.getSelectionModel().getSelectedItem();
 
         if (selected != null) {
             this.selectedPriority = selected;
@@ -31,12 +31,11 @@ public class PriorityController {
         }
     }
 
-
     public void cancelClicked() {
         ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
-    public void speichernCLicked(ActionEvent actionEvent) {
+    public void saveClicked(ActionEvent actionEvent) {
         if (this.selectedPriority != null) {
             selectedPriority.priorityName = priorityTextField.getText();
 
@@ -44,20 +43,18 @@ public class PriorityController {
             System.out.println("Daten aktualisieren");
 
         } else {
-                // erzeuge neuen Priorität, füge ihn in die ListView ein
-                // und speichere alles in die Datei
-                Priority priority = new Priority(); //neuer Speicherplatz für artikel wird reserviert
-                priority.priorityID = priorityList.get(priorityList.size() - 1).priorityID + 1;
-                priority.priorityName = priorityTextField.getText();
+            // erzeuge neuen Priorität, füge ihn in die ListView ein
+            // und speichere alles in die Datei
+            Priority priority = new Priority(); //neuer Speicherplatz für artikel wird reserviert
+            priority.priorityID = priorityList.get(priorityList.size() - 1).priorityID + 1;
+            priority.priorityName = priorityTextField.getText();
 
-                priorityList.add(priority);
+            priorityList.add(priority);
 
-                System.out.println("Neue Priorität");
+            System.out.println("Neue Priorität");
         }
         Priority.printToFile(priorityList);
         this.selectedPriority = null;
         priorityTextField.clear();
     }
-
-
 }

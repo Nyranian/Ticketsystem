@@ -19,7 +19,7 @@
             <children>
                 <Button fx:id="cancelButton" layoutX="105.0" layoutY="111.0" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="76.0" text="Abbrechen" AnchorPane.leftAnchor="105.0" AnchorPane.topAnchor="111.0" />
             
-                <Button layoutY="111.0" mnemonicParsing="false" onAction="#speichernCLicked" prefHeight="25.0" prefWidth="70.0" text="Speichern" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="111.0" />
+                <Button layoutY="111.0" mnemonicParsing="false" onAction="#saveClicked" prefHeight="25.0" prefWidth="70.0" text="Speichern" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="111.0" />
                <Label layoutX="9.0" layoutY="5.0" text="Priorität:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                <TextField fx:id="priorityTextField" layoutY="29.0" prefHeight="26.0" prefWidth="286.0" />
             </children>

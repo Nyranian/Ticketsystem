@@ -12,9 +12,6 @@ public class Status {
     public String statusName;
     public int statusID;
 
-    private static String statusText;
-
-
     @Override
     public String toString(){
         return statusName;
@@ -27,29 +24,23 @@ public class Status {
 
     public static ObservableList<Status> openFile(){
         String s = "";
-        statusText = "";
         ObservableList<Status> result = FXCollections.observableArrayList();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("stati.csv"));
+            try( BufferedReader br = new BufferedReader(new FileReader("stati.csv"))){
+                while ((s = br.readLine()) != null) {
+                    String[] words = s.split(";");
 
-            while ((s = br.readLine()) != null) {
-                String[] words = s.split(";");
+                    Status status = new Status();
+                    status.statusID = Integer.parseInt(words[0]);
+                    status.statusName = words[1];
 
-                Status status = new Status();
-                status.statusID = Integer.parseInt(words[0]);
-                status.statusName = words[1];
-
-                statusText += status.statusID + ";" + status.statusName + ";\n";
-
-                result.add(status);
+                    result.add(status);
+                }
             }
-            br.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
@@ -65,6 +56,4 @@ public class Status {
             e.printStackTrace();
         }
     }
-
-
 }

@@ -194,7 +194,6 @@ public class Controller {
         active = (TicketController) loader.getController();
         active.setTicket(null);
     }
-
 }
 
 
