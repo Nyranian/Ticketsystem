@@ -44,6 +44,7 @@ public class TicketController {
                     break;
                 }
             }
+            
 
             for (Priority p : ticketPriorityComboBox.getItems()) {
                 if (p.priorityID == ticket.Priority.priorityID) {
@@ -60,8 +61,6 @@ public class TicketController {
 
 
     }
-
-
 
     public Ticket getTicket(){
         selectedTicket.ticketName = ticketNameField.getText();

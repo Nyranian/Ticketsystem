@@ -101,17 +101,12 @@ public class Controller {
         ObservableList<Ticket> filter = FXCollections.observableArrayList(allTickets);
         Status s = statusFilterBox.getSelectionModel().getSelectedItem();
         Priority p = priorityFilterBox.getSelectionModel().getSelectedItem();
+        boolean alreadyFiltered = false;
 
-
-        try{
-            filter.removeIf(t -> !t.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
-        }catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
-        }
         if (s != null && s.statusName != null) {
             if(!(statusFilterBox.getValue().statusName.equals("Status wählen"))){
                 filter.removeIf(t -> !t.Status.statusName.equals(s.statusName));
+                alreadyFiltered = true;
             } else{
                 filter = FXCollections.observableArrayList(allTickets);
             }
@@ -119,11 +114,17 @@ public class Controller {
         if (p != null && p.priorityName != null) {
             if(!(priorityFilterBox.getValue().priorityName.equals("Priorität wählen"))){
                 filter.removeIf(t -> !t.Priority.priorityName.equals(p.priorityName));
-            } else{
+            } else if (!alreadyFiltered){
               filter = FXCollections.observableArrayList(allTickets);
             }
         }
 
+        try{
+            filter.removeIf(t -> !t.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
 
         ticketListView.setItems(filter);
     }
