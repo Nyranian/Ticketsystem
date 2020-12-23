@@ -102,6 +102,13 @@ public class Controller {
         Status s = statusFilterBox.getSelectionModel().getSelectedItem();
         Priority p = priorityFilterBox.getSelectionModel().getSelectedItem();
 
+
+        try{
+            filter.removeIf(t -> !t.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
         if (s != null && s.statusName != null) {
             if(!(statusFilterBox.getValue().statusName.equals("Status wählen"))){
                 filter.removeIf(t -> !t.Status.statusName.equals(s.statusName));
@@ -116,12 +123,7 @@ public class Controller {
               filter = FXCollections.observableArrayList(allTickets);
             }
         }
-        try{
-           filter.removeIf(t -> !t.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
-        }catch (Exception e){
-            e.printStackTrace();
-            e.getCause();
-        }
+
 
         ticketListView.setItems(filter);
     }
