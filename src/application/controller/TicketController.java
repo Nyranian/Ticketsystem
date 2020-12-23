@@ -39,15 +39,14 @@ public class TicketController {
             ticketPriorityComboBox.setItems(Priority.openFile());
 
             for (Status s : ticketStatusComboBox.getItems()) {
-                if (s.statusID == ticket.Status.statusID) {
+                if (s.statusName.equals(ticket.Status.statusName)) {
                     ticketStatusComboBox.getSelectionModel().select(s);
                     break;
                 }
             }
-            
 
             for (Priority p : ticketPriorityComboBox.getItems()) {
-                if (p.priorityID == ticket.Priority.priorityID) {
+                if (p.priorityName.equals(ticket.Priority.priorityName)) {
                     ticketPriorityComboBox.getSelectionModel().select(p);
                     break;
                 }
@@ -58,7 +57,6 @@ public class TicketController {
             ticketStatusComboBox.setItems(Status.openFile());
             ticketPriorityComboBox.setItems(Priority.openFile());
         }
-
 
     }
 
@@ -91,9 +89,6 @@ public class TicketController {
             ticketList.add(ticket);
         }
         Ticket.printToFile(ticketList);
-       // this.ticketControllerTicket = null;
-       // ticketNameField.clear();
-       // ticketDescField.clear();
     }
 
 

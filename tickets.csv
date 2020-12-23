@@ -1,8 +1,4 @@
 1;Fehlerbehebung Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;s1;p1
-2;Kot säubern;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;s2;p2
-3;dsa Bezahlvorgang;Beim Abschließen einer Bestellung kommt es zu einer Nullpointer-Exception.;s3;p3
-4;Wageneder;Wageneder;s4;p2
-5;Fertigstellen ToDo-System;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;s6;p2
-6;Wageneder;Wageneder;s4;p3
-7;Fertigstellen ToDo-System;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;s5;p3
-8;Fertigstellen ToDo-System;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;s5;p4
+2;Wagenederasdas;Wageneder;s3;p3
+3;Fertigstellen ToDo-System;Es soll jedes ToDo auf der rechten Seite angezeigt werden.;s4;p2
+4;Wageneder;Wageneder;s4;p3

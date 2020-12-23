@@ -139,16 +139,19 @@ public class Controller {
 
     public void deleteClicked(ActionEvent actionEvent) {
         for (Ticket t1 : ticketList) {
-            if (t1.ticketID == ticketListView.getSelectionModel().getSelectedIndex() + 1) {
-                ticketList.remove(t1.ticketID - 1);
+            if (t1.ticketID == selectedTicket.ticketID) {
+                ticketList.remove(selectedTicket);
 
                 for (int i = 1; i <= ticketList.size();++i) {
                     ticketList.get(i-1).ticketID = i;
                 }
 
                 Ticket.printToFile(ticketList);
+
+                active.setTicket(null);
                 ticketListView.setItems(ticketList);
                 ticketListView.refresh();
+
                 break;
             }
         }
@@ -193,6 +196,8 @@ public class Controller {
 
         contentPane.getChildren().clear();
         contentPane.getChildren().add(root);
+
+        ticketListView.getSelectionModel().select(-1);
 
         active = (TicketController) loader.getController();
         active.setTicket(null);
