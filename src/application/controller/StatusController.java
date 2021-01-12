@@ -16,7 +16,7 @@ public class StatusController {
     ObservableList<Status> statusList = FXCollections.observableArrayList();
 
     public void initialize() {
-        statusList = Status.openFile();
+        statusList = Status.loadStatusList();
         statusListView.setItems(statusList);
     }
 
