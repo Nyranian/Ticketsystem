@@ -36,7 +36,7 @@ public class TicketController {
             ticketNameField.setText(ticket.ticketName);
             ticketDescField.setText(ticket.ticketBeschreibung);
             ticketStatusComboBox.setItems(Status.openFile());
-            ticketPriorityComboBox.setItems(Priority.openFile());
+            ticketPriorityComboBox.setItems(Priority.loadList());
 
             for (Status s : ticketStatusComboBox.getItems()) {
                 if (s.statusName.equals(ticket.Status.statusName)) {
@@ -55,7 +55,7 @@ public class TicketController {
             ticketNameField.setText("");
             ticketDescField.setText("");
             ticketStatusComboBox.setItems(Status.openFile());
-            ticketPriorityComboBox.setItems(Priority.openFile());
+            ticketPriorityComboBox.setItems(Priority.loadList());
         }
 
     }

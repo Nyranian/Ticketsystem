@@ -17,7 +17,7 @@ public class PriorityController {
     ObservableList<Priority> priorityList = FXCollections.observableArrayList();
 
     public void initialize() {
-        priorityList = Priority.openFile();
+        priorityList = Priority.loadList();
         prioritylistView.setItems(priorityList);
 
     }

@@ -7,6 +7,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Priority {
     public String priorityName;
@@ -17,6 +21,27 @@ public class Priority {
     }
     public  String newCSVLine(){
         return priorityID + ";" + priorityName+ "\n";
+    }
+
+
+    public static ObservableList<Priority> loadList(){
+        ObservableList<Priority> list = FXCollections.observableArrayList();
+
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM priorities");
+            while (result.next()){
+                Priority p = new Priority();
+                p.priorityName = result.getString("name");
+                p.priorityID = result.getInt("priority_id");
+                list.add(p);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return list;
     }
 
     public static ObservableList<Priority> openFile(){

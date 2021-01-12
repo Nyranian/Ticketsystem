@@ -29,7 +29,7 @@ public class Controller {
 
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
     public TicketController active;
-    Ticket selectedTicket = new Ticket();
+    private  Ticket selectedTicket = new Ticket();
 
 
     public void editStatiClicked(ActionEvent actionEvent) {
@@ -62,6 +62,7 @@ public class Controller {
         contentPane.getChildren().clear();
         contentPane.getChildren().add(root);
 
+
         active = (TicketController) loader.getController();
 
         selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
@@ -71,6 +72,7 @@ public class Controller {
         if (selectedTicket != null) {
             active.setTicket(selectedTicket);
         }
+
     }
 
     public void initialize() {
@@ -85,7 +87,7 @@ public class Controller {
         statusFilterBox.setItems(stati);
         statusFilterBox.getSelectionModel().select(s);
 
-        ObservableList<Priority> priority = Priority.openFile();
+        ObservableList<Priority> priority = Priority.loadList();
         Priority p = new Priority();
         p.priorityName = "Priorität wählen";
         p.priorityID = -1;
@@ -109,6 +111,7 @@ public class Controller {
                 alreadyFiltered = true;
             } else{
                 filter = FXCollections.observableArrayList(allTickets);
+
             }
         }
         if (p != null && p.priorityName != null) {
@@ -117,6 +120,12 @@ public class Controller {
             } else if (!alreadyFiltered){
               filter = FXCollections.observableArrayList(allTickets);
             }
+        }
+        try{
+            filter.removeIf(t -> !t.ticketName.toLowerCase().contains(ticketNameSearchField.getText().toLowerCase()));
+        }catch (Exception e){
+            e.printStackTrace();
+            e.getCause();
         }
 
         try{
