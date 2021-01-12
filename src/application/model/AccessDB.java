@@ -29,7 +29,7 @@ public class AccessDB {
         if(connection == null){
             try {
                 //erzeuge neue Verbindung zur Datenbank
-                connection = DriverManager.getConnection(("jdbc:ucanaccess://C:/Users/elias/Documents/HTL/ITP/ITP2/Ticketsystem/db/Ticket_Verwaltung.accdb"));
+                connection = DriverManager.getConnection(("jdbc:ucanaccess://db/Ticket_Verwaltung.accdb"));
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
