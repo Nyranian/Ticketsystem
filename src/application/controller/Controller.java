@@ -79,7 +79,7 @@ public class Controller {
         ticketListView.setItems(Ticket.openFile());
         ticketList.setAll(ticketListView.getItems());
 
-        ObservableList<Status> stati = Status.openFile();
+        ObservableList<Status> stati = Status.loadStatusList();
         Status s = new Status();
         s.statusName = "Status wählen";
         s.statusID = -1;
@@ -97,7 +97,6 @@ public class Controller {
 
         allTickets = new ArrayList<>(ticketListView.getItems());
     }
-
 
     public void Filter() {
         ObservableList<Ticket> filter = FXCollections.observableArrayList(allTickets);
