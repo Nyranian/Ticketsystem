@@ -32,7 +32,7 @@ public class UserController {
 
 
     public void initialize() {
-        userList = User.openFile();
+        userList = User.loadUserList();
         userListView.setItems(userList);
 
     }
