@@ -7,6 +7,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Ticket {
     public int ticketID;
@@ -14,8 +18,6 @@ public class Ticket {
     public String ticketBeschreibung;
     public Status Status;
     public Priority Priority;
-
-   // public static String ticketText;
 
     @Override
     public String toString(){
@@ -27,37 +29,32 @@ public class Ticket {
     }
 
     public static ObservableList<Ticket> openFile() {
-        String s = "";
-       // ticketText = "";
-        ObservableList<Ticket> result = FXCollections.observableArrayList();
+        ObservableList<Ticket> list = FXCollections.observableArrayList();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("tickets.csv"));
+            Connection connection = AccessDB.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM tickets");
+            while (result.next()){
+                Ticket t = new Ticket();
+                t.ticketID = result.getInt("ticket_id");
+                t.ticketName= result.getString("name");
+                t.ticketBeschreibung = result.getString("desc");
 
-            while ((s = br.readLine()) != null) {
-                String[] words = s.split(";");
+                t.Status = new Status();
+                t.Status.statusID = result.getInt("status_id");
 
-                Ticket ticket = new Ticket();
-                ticket.ticketID = Integer.parseInt(words[0]);
-                ticket.ticketName = words[1];
-                ticket.ticketBeschreibung = words[2];
+                t.Priority = new Priority();
+                t.Priority.priorityID = result.getInt("priority_id");
 
-                ticket.Status = new Status();
-                ticket.Status.statusName = words[3];
-                ticket.Priority = new Priority();
-                ticket.Priority.priorityName = words[4];
 
-               // ticketText += ticket.ID + ";" + ticket.Name + ";" + ticket.Beschreibung + ";\n";;
-
-                result.add(ticket);
+                list.add(t);
             }
-            br.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
-        return result;
+        return list;
     }
     public static void printToFile(ObservableList<Ticket> ticketList){
         try {

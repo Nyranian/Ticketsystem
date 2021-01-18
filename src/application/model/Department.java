@@ -7,6 +7,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Department {
     public String departmentName;
@@ -23,29 +27,23 @@ public class Department {
     }
 
     public static ObservableList<Department> openFile(){
-        String s = "";
-        ObservableList<Department> result = FXCollections.observableArrayList();
+        ObservableList<Department> list = FXCollections.observableArrayList();
 
         try {
-            BufferedReader br = new BufferedReader(new FileReader("department.csv"));
-
-            while ((s = br.readLine()) != null) {
-                String[] words = s.split(";");
-
-                Department department = new Department();
-                department.departmentName = words[1];
-                department.departmentID = Integer.parseInt(words[0]);
-
-
-                result.add(department);
+            Connection connection = AccessDB.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM departments");
+            while (result.next()){
+                Department d = new Department();
+                d.departmentName= result.getString("name");
+                d.departmentID = result.getInt("department_id");
+                list.add(d);
             }
-            br.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
-        return result;
+        return list;
     }
 
     public static void printToFile(ObservableList<Department> departmentList){

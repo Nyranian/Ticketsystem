@@ -25,29 +25,6 @@ public class Status {
         return statusID + ";" + statusName + "\n";
     }
 
-
-    public static ObservableList<Status> openFile(){
-        String s = "";
-        ObservableList<Status> result = FXCollections.observableArrayList();
-
-        try {
-            try( BufferedReader br = new BufferedReader(new FileReader("stati.csv"))){
-                while ((s = br.readLine()) != null) {
-                    String[] words = s.split(";");
-
-                    Status status = new Status();
-                    status.statusID = Integer.parseInt(words[0]);
-                    status.statusName = words[1];
-
-                    result.add(status);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     public static ObservableList<Status> loadStatusList(){
         ObservableList<Status> list = FXCollections.observableArrayList();
 
@@ -81,4 +58,6 @@ public class Status {
             e.printStackTrace();
         }
     }
+
+
 }
