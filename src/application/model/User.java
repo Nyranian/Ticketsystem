@@ -7,6 +7,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class User {
     public String userID = "";
@@ -25,6 +29,32 @@ public class User {
 
     public String newCSVLine() {
         return userID + ";" + userTitle + ";" + userName + ";" + userStreet + ";" + userPlz + ";" + userPlace + ";" + userDepartment + "\n";
+    }
+
+    public static ObservableList<User> loadUserList(){
+        ObservableList<User> list = FXCollections.observableArrayList();
+
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM users");
+            while (result.next()){
+                User user = new User();
+                user.userID = result.getString("user_id");
+                user.userName = result.getString("name");
+                user.userPlace = result.getString("city");
+                if(result.getString("title")!= null) {
+                    user.userTitle = result.getString("title");
+                }
+                user.userPlz = result.getShort("zip");
+                user.userDepartment = result.getString("department_id");
+                user.userStreet = result.getString("street");
+                list.add(user);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return list;
     }
 
     public static ObservableList<User> openFile() {
