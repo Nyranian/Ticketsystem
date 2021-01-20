@@ -7,10 +7,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class User {
     public String userID = "";
@@ -95,5 +92,34 @@ public class User {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public void delete(){
+        try{
+            Connection connection = AccessDB.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM users WHERE user_id = " + userID);
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+
+    public void update(){
+        try {
+            Connection connection = AccessDB.getConnection();
+
+            PreparedStatement statement = null;
+
+            statement = connection.prepareStatement("UPDATE users SET name = ? WHERE user_id = " + userID);
+
+            statement.setString(1, userName);
+            //statement.setInt(2, priorityID);
+
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }

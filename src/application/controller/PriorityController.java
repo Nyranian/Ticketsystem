@@ -21,7 +21,6 @@ public class PriorityController {
     public void initialize() {
         priorityList = Priority.loadList();
         prioritylistView.setItems(priorityList);
-
     }
 
     public void priorityItemClicked() {

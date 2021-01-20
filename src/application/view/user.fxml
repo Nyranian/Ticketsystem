@@ -33,6 +33,7 @@
                <TextField fx:id="userPlaceTextfield" layoutX="133.0" layoutY="131.0" prefHeight="17.0" prefWidth="267.0" />
                <Label layoutX="40.0" layoutY="168.0" text="Abteilung" />
                <ComboBox fx:id="userDepartmentCombobox" layoutX="131.0" layoutY="164.0" prefHeight="25.0" prefWidth="267.0" />
+               <Button layoutX="299.0" layoutY="288.0" mnemonicParsing="false" onAction="#deleteClicked" text="Löschen" AnchorPane.leftAnchor="299.0" AnchorPane.topAnchor="288.0" />
             </children>
          </AnchorPane>
      </items>

@@ -1,6 +1,5 @@
 package application.controller;
 
-import application.model.Priority;
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,11 +10,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 
 public class UserController {
     public ListView userListView;
@@ -42,32 +36,33 @@ public class UserController {
     public void saveClicked(ActionEvent actionEvent) {
         if (this.selectedUser != null) {
             selectedUser.userName = userNameTextfield.getText();
-            selectedUser.userPlace = userPlaceTextfield.getText();
-            selectedUser.userStreet = userStreetTextfield.getText();
-            selectedUser.userTitle = userTitleTextfield.getText();
-            selectedUser.userPlz = Short.parseShort(userPlzTextfield.getText());
 
             userListView.refresh();
-            System.out.println("Daten aktualisieren");
 
-        } else {
-            // erzeuge neuen Priorität, füge ihn in die ListView ein
-            // und speichere alles in die Datei
-            User user = new User(); //neuer Speicherplatz für artikel wird reserviert
-            user.userID = String.valueOf(Integer.parseInt(userList.get(userList.size() - 1).userID) + 1);
-            user.userName = userNameTextfield.getText();
+            selectedUser.update(); // Aktualisiere in Datenbank
 
-            userList.add(user);
+        } /*else{
+            if(!priorityTextField.getText().isEmpty()){
+                Priority priority = new Priority(); //neuer Speicherplatz für artikel wird reserviert
+                priority.priorityID = priorityList.get(priorityList.size() - 1).priorityID + 1;
+                priority.priorityName = priorityTextField.getText();
 
-            System.out.println("Neue Priorität");
+                priorityList.add(priority);
+                prioritylistView.getItems().add(priority);
+            }
         }
+        */
+
         User.printToFile(userList);
         this.selectedUser = null;
         userNameTextfield.clear();
-
     }
-    private void printToFile() {
 
+    public void deleteClicked(ActionEvent actionEvent) {
+        userNameTextfield.clear();
+        userListView.getItems().remove(selectedUser);
+
+        selectedUser.delete();
     }
 
     public void cancelClicked(ActionEvent actionEvent) {
