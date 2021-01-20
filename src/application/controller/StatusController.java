@@ -36,19 +36,11 @@ public class StatusController {
     public void saveClicked() {
         if (this.selectedStatus != null) {
             selectedStatus.statusName = statusNameField.getText();
-            statusListView.refresh();
-            System.out.println("Daten aktualisiert");
-        } else {
-            Status status = new Status();
-            status.statusID = (statusList.get(statusList.size() - 1).statusID) + 1;
-            status.statusName = statusNameField.getText();
 
-            statusList.add(status);
-            System.out.println("Neuer Status");
+            statusListView.refresh();
+
+            selectedStatus.update(); // Aktualisiere in Datenbank
         }
-        Status.printToFile(statusList);
-        this.selectedStatus = null;
-        statusNameField.clear();
     }
 
     public void deleteClicked(ActionEvent actionEvent) {

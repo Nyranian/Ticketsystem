@@ -42,7 +42,6 @@ public class Priority {
             statement = connection.prepareStatement("UPDATE priorities SET name = ? WHERE priority_id = " + priorityID);
 
             statement.setString(1, priorityName);
-            //statement.setInt(2, priorityID);
 
             statement.executeUpdate();
         } catch (SQLException throwables) {

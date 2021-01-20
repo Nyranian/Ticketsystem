@@ -45,24 +45,14 @@ public class PriorityController {
 
             selectedPriority.update(); // Aktualisiere in Datenbank
 
-        } /*else{
-            if(!priorityTextField.getText().isEmpty()){
-                Priority priority = new Priority(); //neuer Speicherplatz für artikel wird reserviert
-                priority.priorityID = priorityList.get(priorityList.size() - 1).priorityID + 1;
-                priority.priorityName = priorityTextField.getText();
-
-                priorityList.add(priority);
-                prioritylistView.getItems().add(priority);
-            }
         }
-        */
 
         Priority.printToFile(priorityList);
         this.selectedPriority = null;
         priorityTextField.clear();
     }
 
-    public void deletClicked(ActionEvent actionEvent) {
+    public void deleteClicked(ActionEvent actionEvent) {
         priorityTextField.clear();
         prioritylistView.getItems().remove(selectedPriority);
 

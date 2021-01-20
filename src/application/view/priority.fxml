@@ -22,7 +22,7 @@
                 <Button layoutY="111.0" mnemonicParsing="false" onAction="#saveClicked" prefHeight="25.0" prefWidth="70.0" text="Speichern" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="111.0" />
                <Label layoutX="9.0" layoutY="5.0" text="Priorität:" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                <TextField fx:id="priorityTextField" layoutY="29.0" prefHeight="26.0" prefWidth="286.0" />
-               <Button layoutX="84.0" layoutY="111.0" mnemonicParsing="false" onAction="#deletClicked" text="Löschen" />
+               <Button layoutX="84.0" layoutY="111.0" mnemonicParsing="false" onAction="#deleteClicked" text="Löschen" />
             </children>
          </AnchorPane>
      </items>
