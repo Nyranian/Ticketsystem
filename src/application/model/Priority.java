@@ -3,14 +3,12 @@ package application.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class Priority {
     public String priorityName;
@@ -23,6 +21,35 @@ public class Priority {
         return priorityID + ";" + priorityName+ "\n";
     }
 
+    public void delete(){
+        try{
+            Connection connection = AccessDB.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM priorities WHERE priority_id = " + priorityID);
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
+    }
+
+    public void update(){
+        try {
+            Connection connection = AccessDB.getConnection();
+
+            PreparedStatement statement = null;
+
+            statement = connection.prepareStatement("UPDATE priorities SET name = ? WHERE priority_id = " + priorityID);
+
+            statement.setString(1, priorityName);
+            //statement.setInt(2, priorityID);
+
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 
     public static ObservableList<Priority> loadList(){
         ObservableList<Priority> list = FXCollections.observableArrayList();
@@ -80,6 +107,7 @@ public class Priority {
             bw.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }}
+        }
+    }
 
 }

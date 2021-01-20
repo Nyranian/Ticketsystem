@@ -3,9 +3,7 @@ package application.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -23,6 +21,18 @@ public class Status {
 
     public  String newCSVLine(){
         return statusID + ";" + statusName + "\n";
+    }
+
+    public void delete(){
+        try{
+            Connection connection = AccessDB.getConnection();
+
+            Statement statement = null;
+            statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM stati WHERE status_id = " + statusID);
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+        }
     }
 
     public static ObservableList<Status> loadStatusList(){
@@ -45,7 +55,6 @@ public class Status {
         return list;
     }
 
-
     public static void printToFile(ObservableList<Status> statusList){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
@@ -53,11 +62,11 @@ public class Status {
                 bw.write(s.newCSVLine());
             }
             bw.flush();
+
             bw.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
 }

@@ -3,6 +3,7 @@ package application.controller;
 import application.model.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -50,4 +51,10 @@ public class StatusController {
         statusNameField.clear();
     }
 
+    public void deleteClicked(ActionEvent actionEvent) {
+        statusNameField.clear();
+        statusListView.getItems().remove(selectedStatus);
+
+        selectedStatus.delete();
+    }
 }
