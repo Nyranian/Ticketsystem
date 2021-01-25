@@ -33,6 +33,26 @@ public class Priority {
         }
     }
 
+    public static Priority getById(int id){
+        Priority obj = null;
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM priorities WHERE priority_id = " +id);
+
+            if(result.next()){
+                obj = new Priority();
+                obj.priorityID = result.getInt("priority_id");
+                obj.priorityName = result.getString("name");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return obj;
+    }
+
     public void update(){
         try {
             Connection connection = AccessDB.getConnection();

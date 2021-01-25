@@ -81,13 +81,7 @@ public class UserController {
             userPlzTextfield.setText(String.valueOf(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlz));
             userStreetTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userStreet);
             userDepartmentCombobox.setItems(Department.loadList());
-
-            for (Department d : userDepartmentCombobox.getItems()) {
-                if (d.departmentID == (selectedUser.userDepartment.departmentID)) {
-                    userDepartmentCombobox.getSelectionModel().select(d);
-                    break;
-                }
-            }
+            userDepartmentCombobox.getSelectionModel().select(Department.getById(selectedUser.userDepartment.departmentID));
         }
     }
 }
