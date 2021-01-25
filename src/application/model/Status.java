@@ -20,6 +20,28 @@ public class Status {
         return statusID + ";" + statusName + "\n";
     }
 
+    public static Status getById(int id){
+        Status obj = null;
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM stati WHERE status_id = " +id);
+
+            if(result.next()){
+                obj = new Status();
+                obj.statusID = result.getInt("department_id");
+                obj.statusName = result.getString("name");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return obj;
+    }
+
+
+
     public void delete(){
         try{
             Connection connection = AccessDB.getConnection();

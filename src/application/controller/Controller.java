@@ -66,8 +66,8 @@ public class Controller {
         active = (TicketController) loader.getController();
 
         selectedTicket = ticketListView.getSelectionModel().getSelectedItem();
-        selectedTicket.Status.statusID = ticketListView.getSelectionModel().getSelectedIndex() + 1;
-        selectedTicket.Priority.priorityID = ticketListView.getSelectionModel().getSelectedIndex() + 1;
+        selectedTicket.status.statusID = ticketListView.getSelectionModel().getSelectedIndex() + 1;
+        selectedTicket.priority.priorityID = ticketListView.getSelectionModel().getSelectedIndex() + 1;
 
         if (selectedTicket != null) {
             active.setTicket(selectedTicket);
@@ -106,7 +106,7 @@ public class Controller {
 
         if (s != null && s.statusName != null) {
             if(!(statusFilterBox.getValue().statusName.equals("Status wählen"))){
-                filter.removeIf(t -> !t.Status.statusName.equals(s.statusName));
+                filter.removeIf(t -> !t.status.statusName.equals(s.statusName));
                 alreadyFiltered = true;
             } else{
                 filter = FXCollections.observableArrayList(allTickets);
@@ -115,7 +115,7 @@ public class Controller {
         }
         if (p != null && p.priorityName != null) {
             if(!(priorityFilterBox.getValue().priorityName.equals("Priorität wählen"))){
-                filter.removeIf(t -> !t.Priority.priorityName.equals(p.priorityName));
+                filter.removeIf(t -> !t.priority.priorityName.equals(p.priorityName));
             } else if (!alreadyFiltered){
               filter = FXCollections.observableArrayList(allTickets);
             }
@@ -170,14 +170,14 @@ public class Controller {
         loader.loadFXML("view/ticket.fxml");
 
         Ticket ticket = new Ticket();
-        ticket.Status = new Status();
-        ticket.Priority = new Priority();
+        ticket.status = new Status();
+        ticket.priority = new Priority();
 
         ticket.ticketName = active.ticketNameField.getText();
         ticket.ticketBeschreibung = active.ticketDescField.getText();
         ticket.ticketID = ticketList.size() + 1;
-        ticket.Status.statusName = active.ticketStatusComboBox.getSelectionModel().getSelectedItem().toString();
-        ticket.Priority.priorityName = active.ticketPriorityComboBox.getSelectionModel().getSelectedItem().toString();
+        ticket.status.statusName = active.ticketStatusComboBox.getSelectionModel().getSelectedItem().toString();
+        ticket.priority.priorityName = active.ticketPriorityComboBox.getSelectionModel().getSelectedItem().toString();
 
         if (ticketListView.getSelectionModel().getSelectedItem() == null) {
             ticketList.add(ticket);

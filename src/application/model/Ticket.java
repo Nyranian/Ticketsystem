@@ -14,8 +14,8 @@ public class Ticket {
     public int ticketID;
     public String ticketName;
     public String ticketBeschreibung;
-    public Status Status;
-    public Priority Priority;
+    public Status status;
+    public Priority priority;
 
     @Override
     public String toString(){
@@ -23,7 +23,31 @@ public class Ticket {
     }
 
     public  String newCSVLine(){
-        return ticketID + ";" + ticketName + ";" + ticketBeschreibung + ";" + Status.statusName + ";" + Priority.priorityName +"\n";
+        return ticketID + ";" + ticketName + ";" + ticketBeschreibung + ";" + status.statusName + ";" + priority.priorityName +"\n";
+    }
+
+    public static Ticket getById(int id){
+        Ticket obj = null;
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM tickets WHERE ticket_id = " +id);
+
+            if(result.next()){
+                obj = new Ticket();
+                obj.ticketID = result.getInt("department_id");
+                obj.ticketName = result.getString("name");
+                obj.ticketBeschreibung = result.getString("desc");
+                obj.status = Status.getById(result.getInt("status_id"));
+                //obj.priority = Priority.getById(result.getInt("priority_id"));
+                //obj.status = result.getObject("status_id", Status.class);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return obj;
     }
 
     public static ObservableList<Ticket> openFile() {
@@ -39,11 +63,12 @@ public class Ticket {
                 t.ticketName= result.getString("name");
                 t.ticketBeschreibung = result.getString("desc");
 
-                t.Status = new Status();
-                t.Status.statusID = result.getInt("status_id");
+                t.status = new Status();
+                t.status = Status.getById(result.getInt("department_id"));
 
-                t.Priority = new Priority();
-                t.Priority.priorityID = result.getInt("priority_id");
+
+                t.priority = new Priority();
+                t.priority.priorityID = result.getInt("priority_id");
 
 
                 list.add(t);
