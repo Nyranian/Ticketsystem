@@ -111,10 +111,13 @@ public class User {
 
             PreparedStatement statement = null;
 
-            statement = connection.prepareStatement("UPDATE users SET name = ? WHERE user_id = " + userID);
+            statement = connection.prepareStatement("UPDATE users SET name = ?, title = ?, street = ?, zip = ?, city = ? WHERE user_id = " + userID);
 
             statement.setString(1, userName);
-            //statement.setInt(2, priorityID);
+            statement.setString(2, userTitle);
+            statement.setString(3, userStreet);
+            statement.setShort(4, userPlz);
+            statement.setString(5, userPlace);
 
             statement.executeUpdate();
         } catch (SQLException throwables) {
