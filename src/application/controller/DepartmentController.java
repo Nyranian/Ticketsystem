@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class DepartmentController {
-    public ListView departmentListView;
+    public ListView<Department> departmentListView;
     public TextField departmentNameField;
     public Button saveButton;
     public Button cancelButton;
@@ -22,7 +22,7 @@ public class DepartmentController {
     Department selectedDepartment;
 
     public void initialize(){
-        departmentList = Department.openFile();
+        departmentList = Department.loadList();
         departmentListView.setItems(departmentList);
     }
 

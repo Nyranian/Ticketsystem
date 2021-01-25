@@ -1,5 +1,7 @@
 package application.controller;
 
+import application.model.Department;
+import application.model.Status;
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,13 +14,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 public class UserController {
-    public ListView userListView;
+    public ListView<User> userListView;
     public TextField userNameTextfield;
     public TextField userTitleTextfield;
     public TextField userStreetTextfield;
     public TextField userPlzTextfield;
     public TextField userPlaceTextfield;
-    public ComboBox userDepartmentCombobox;
+    public ComboBox<Department> userDepartmentCombobox;
     public Button cancelButton;
     private User selectedUser = null;
     ObservableList<User> userList = FXCollections.observableArrayList();
@@ -80,8 +82,14 @@ public class UserController {
             userPlaceTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlace);
             userPlzTextfield.setText(String.valueOf(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlz));
             userStreetTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userStreet);
-            userDepartmentCombobox.setItems(User.userDepartmentList);
-            userDepartmentCombobox.getSelectionModel().select(userListView.getSelectionModel().getSelectedIndex());
+            userDepartmentCombobox.setItems(Department.loadList());
+
+            for (Department d : userDepartmentCombobox.getItems()) {
+                if (d.departmentID == (selectedUser.userDepartment.departmentID)) {
+                    userDepartmentCombobox.getSelectionModel().select(d);
+                    break;
+                }
+            }
         }
     }
 }
