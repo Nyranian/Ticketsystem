@@ -47,11 +47,11 @@ public class Department {
         try {
             Connection connection = AccessDB.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT  * FROM priorities");
+            ResultSet result = statement.executeQuery("SELECT  * FROM departments");
             while (result.next()){
                 Department d = new Department();
                 d.departmentName = result.getString("name");
-                d.departmentID = result.getInt("priority_id");
+                d.departmentID = result.getInt("department_id");
                 list.add(d);
             }
 

@@ -26,13 +26,11 @@ public class UserController {
     ObservableList<User> userList = FXCollections.observableArrayList();
 
 
-
     public void initialize() {
         userList = User.loadUserList();
         userListView.setItems(userList);
 
     }
-
 
 
     public void saveClicked(ActionEvent actionEvent) {
@@ -73,7 +71,7 @@ public class UserController {
 
 
     public void userListViewClicked(MouseEvent mouseEvent) {
-        User selected = (User) userListView.getSelectionModel().getSelectedItem();
+        User selected = userListView.getSelectionModel().getSelectedItem();
 
         if (selected != null) {
             this.selectedUser = selected;
