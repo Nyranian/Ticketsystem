@@ -15,7 +15,7 @@ public class User {
     public String userName = "";
     public String userStreet = "";
     public short userPlz = 0;
-    public String userDepartment = "";
+    public Department userDepartment = null;
     public String userPlace = "";
     public static ObservableList<String> userDepartmentList = FXCollections.observableArrayList();
 
@@ -27,6 +27,8 @@ public class User {
     public String newCSVLine() {
         return userID + ";" + userTitle + ";" + userName + ";" + userStreet + ";" + userPlz + ";" + userPlace + ";" + userDepartment + "\n";
     }
+
+
 
     public static ObservableList<User> loadUserList(){
         ObservableList<User> list = FXCollections.observableArrayList();
@@ -44,7 +46,7 @@ public class User {
                     user.userTitle = result.getString("title");
                 }
                 user.userPlz = result.getShort("zip");
-                user.userDepartment = result.getString("department_id");
+                user.userDepartment = Department.getById(result.getInt("department_id"));
                 user.userStreet = result.getString("street");
                 list.add(user);
             }
@@ -68,7 +70,7 @@ public class User {
                     user.userStreet = words[3];
                     user.userPlz = Short.parseShort(words[4]);
                     user.userPlace = words[5];
-                    user.userDepartment = words[6];
+                    user.userDepartment.departmentName = words[6];
 
                     userDepartmentList.add(words[6]);
 

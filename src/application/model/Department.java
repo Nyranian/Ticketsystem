@@ -3,9 +3,7 @@ package application.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.*;
 
@@ -23,7 +21,47 @@ public class Department {
         return departmentID + ";" + departmentName + "\n";
     }
 
-    public static ObservableList<Department> openFile(){
+    public static Department getById(int id){
+        Department obj = null;
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM departments WHERE department_id = " +id);
+
+            if(result.next()){
+                obj = new Department();
+                obj.departmentID = result.getInt("department_id");
+                obj.departmentName = result.getString("name");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return obj;
+    }
+
+    public static ObservableList<Department> loadList(){
+        ObservableList<Department> list = FXCollections.observableArrayList();
+
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT  * FROM priorities");
+            while (result.next()){
+                Department d = new Department();
+                d.departmentName = result.getString("name");
+                d.departmentID = result.getInt("priority_id");
+                list.add(d);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return list;
+    }
+
+    /*public static ObservableList<Department> openFile(){
         ObservableList<Department> list = FXCollections.observableArrayList();
 
         try {
@@ -42,6 +80,8 @@ public class Department {
         }
         return list;
     }
+
+     */
 
     public static void printToFile(ObservableList<Department> departmentList){
         try {
