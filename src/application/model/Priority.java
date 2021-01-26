@@ -21,6 +21,18 @@ public class Priority {
         return priorityID + ";" + priorityName+ "\n";
     }
 
+    public Priority(int priorityID) {
+        if(priorityID > 0){
+            this.priorityName = Priority.getById(priorityID).priorityName;
+            this.priorityID = priorityID;
+        }
+    }
+
+    public Priority() {
+        this.priorityName = "";
+        this.priorityID = 0;
+    }
+
     public void delete(){
         try{
             Connection connection = AccessDB.getConnection();
@@ -34,23 +46,26 @@ public class Priority {
     }
 
     public static Priority getById(int id){
-        Priority obj = null;
-        try {
-            Connection connection = AccessDB.getConnection();
-            Statement statement = null;
-            statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT  * FROM priorities WHERE priority_id = " +id);
+        if(id > 0){
+            Priority obj = null;
+            try {
+                Connection connection = AccessDB.getConnection();
+                Statement statement = null;
+                statement = connection.createStatement();
+                ResultSet result = statement.executeQuery("SELECT  * FROM priorities WHERE priority_id = " +id);
 
-            if(result.next()){
-                obj = new Priority();
-                obj.priorityID = result.getInt("priority_id");
-                obj.priorityName = result.getString("name");
+                if(result.next()){
+                    obj = new Priority();
+                    obj.priorityID = result.getInt("priority_id");
+                    obj.priorityName = result.getString("name");
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
 
-        return obj;
+            return obj;
+        }
+        return new Priority();
     }
 
     public void update(){

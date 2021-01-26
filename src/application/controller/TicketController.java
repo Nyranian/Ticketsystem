@@ -18,7 +18,7 @@ public class TicketController {
     public TextArea ticketDescField;
     public Ticket selectedTicket = null;
     public ObservableList<Ticket> ticketList = FXCollections.observableArrayList();
-    public ComboBox ticketOrderComboBox;
+    public ComboBox<Ticket> ticketOrderComboBox;
     public ComboBox<Status> ticketStatusComboBox;
     public ComboBox<Priority> ticketPriorityComboBox;
 
