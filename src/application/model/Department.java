@@ -11,6 +11,15 @@ public class Department {
     public String departmentName;
     public int departmentID;
 
+    public Department(int id, String name) {
+        this.departmentName = name;
+        this.departmentID = id;
+    }
+
+    public Department() {
+        this.departmentName = "";
+        this.departmentID = 0;
+    }
 
     @Override
     public String toString(){
@@ -27,12 +36,10 @@ public class Department {
             Connection connection = AccessDB.getConnection();
             Statement statement = null;
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT  * FROM departments WHERE department_id = " +id);
+            ResultSet result = statement.executeQuery("SELECT * FROM departments WHERE department_id = " +id);
 
             if(result.next()){
-                obj = new Department();
-                obj.departmentID = result.getInt("department_id");
-                obj.departmentName = result.getString("name");
+                obj = new Department(result.getInt("department_id"), result.getString("name"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -116,7 +123,6 @@ public class Department {
             statement = connection.prepareStatement("UPDATE departments SET name = ? WHERE department_id = " + departmentID);
 
             statement.setString(1, departmentName);
-            //statement.setInt(2, priorityID);
 
             statement.executeUpdate();
         } catch (SQLException throwables) {

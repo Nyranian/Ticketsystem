@@ -11,11 +11,9 @@ public class Status {
     public String statusName;
     public int statusID;
 
-    public Status(int priorityID) {
-        if (priorityID > 0) {
-            this.statusName = Priority.getById(priorityID).priorityName;
-            this.statusID = priorityID;
-        }
+    public Status(int statusID, String statusName) {
+        this.statusName = statusName;
+        this.statusID = statusID;
     }
 
     public Status() {

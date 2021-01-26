@@ -12,20 +12,20 @@ import java.sql.*;
 
 public class Priority {
     public String priorityName;
-    public  int priorityID;
+    public int priorityID;
+
     @Override
     public String toString() {
         return priorityName;
     }
-    public  String newCSVLine(){
-        return priorityID + ";" + priorityName+ "\n";
+
+    public String newCSVLine() {
+        return priorityID + ";" + priorityName + "\n";
     }
 
-    public Priority(int priorityID) {
-        if(priorityID > 0){
-            this.priorityName = Priority.getById(priorityID).priorityName;
-            this.priorityID = priorityID;
-        }
+    public Priority(int priorityID, String priorityName) {
+        this.priorityName = priorityName;
+        this.priorityID = priorityID;
     }
 
     public Priority() {
@@ -33,28 +33,28 @@ public class Priority {
         this.priorityID = 0;
     }
 
-    public void delete(){
-        try{
+    public void delete() {
+        try {
             Connection connection = AccessDB.getConnection();
 
             Statement statement = null;
             statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM priorities WHERE priority_id = " + priorityID);
-        }catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public static Priority getById(int id){
-        if(id > 0){
+    public static Priority getById(int id) {
+        if (id > 0) {
             Priority obj = null;
             try {
                 Connection connection = AccessDB.getConnection();
                 Statement statement = null;
                 statement = connection.createStatement();
-                ResultSet result = statement.executeQuery("SELECT  * FROM priorities WHERE priority_id = " +id);
+                ResultSet result = statement.executeQuery("SELECT  * FROM priorities WHERE priority_id = " + id);
 
-                if(result.next()){
+                if (result.next()) {
                     obj = new Priority();
                     obj.priorityID = result.getInt("priority_id");
                     obj.priorityName = result.getString("name");
@@ -68,7 +68,7 @@ public class Priority {
         return new Priority();
     }
 
-    public void update(){
+    public void update() {
         try {
             Connection connection = AccessDB.getConnection();
 
@@ -85,14 +85,14 @@ public class Priority {
 
     }
 
-    public static ObservableList<Priority> loadList(){
+    public static ObservableList<Priority> loadList() {
         ObservableList<Priority> list = FXCollections.observableArrayList();
 
         try {
             Connection connection = AccessDB.getConnection();
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT  * FROM priorities");
-            while (result.next()){
+            while (result.next()) {
                 Priority p = new Priority();
                 p.priorityName = result.getString("name");
                 p.priorityID = result.getInt("priority_id");
@@ -105,7 +105,7 @@ public class Priority {
         return list;
     }
 
-    public static ObservableList<Priority> openFile(){
+    public static ObservableList<Priority> openFile() {
         String s;
         ObservableList<Priority> result = FXCollections.observableArrayList();
 
@@ -130,7 +130,8 @@ public class Priority {
 
         return result;
     }
-    public static void printToFile(ObservableList<Priority> priorityList){
+
+    public static void printToFile(ObservableList<Priority> priorityList) {
 
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("priorities.csv"));

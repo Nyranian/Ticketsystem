@@ -88,8 +88,7 @@ public class Controller {
         statusFilterBox.getSelectionModel().select(s);
 
         ObservableList<Priority> priority = Priority.loadList();
-        Priority p = new Priority(-1);
-        p.priorityName = "Priorität wählen";
+        Priority p = new Priority(-1, "Priorität wählen");
         priority.add(0, p);
         priorityFilterBox.setItems(priority);
         priorityFilterBox.getSelectionModel().select(p);
