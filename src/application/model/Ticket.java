@@ -17,6 +17,13 @@ public class Ticket {
     public Status status;
     public Priority priority;
 
+    public  Ticket(int id, String name, String desc, int statusId, int departmentId){
+        this.ticketID = id;
+        this.ticketName = name;
+        this.ticketBeschreibung = desc;
+        this.status = Status.getById(statusId);
+        this.priority = Priority.getById(departmentId);
+    }
     @Override
     public String toString(){
         return ticketName;
@@ -35,13 +42,9 @@ public class Ticket {
             ResultSet result = statement.executeQuery("SELECT  * FROM tickets WHERE ticket_id = " +id);
 
             if(result.next()){
-                obj = new Ticket();
-                obj.ticketID = result.getInt("department_id");
-                obj.ticketName = result.getString("name");
-                obj.ticketBeschreibung = result.getString("desc");
-                obj.status = Status.getById(result.getInt("status_id"));
-                //obj.priority = Priority.getById(result.getInt("priority_id"));
-                //obj.status = result.getObject("status_id", Status.class);
+                obj = new Ticket(result.getInt("dpartment_id"),
+                        result.getString("name"), result.getString("desc"),
+                        result.getInt("status_id"), result.getInt("department_id"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
