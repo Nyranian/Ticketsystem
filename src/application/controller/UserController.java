@@ -1,7 +1,6 @@
 package application.controller;
 
 import application.model.Department;
-import application.model.Status;
 import application.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,7 +52,7 @@ public class UserController {
         }
         */
 
-        User.printToFile(userList);
+        //User.printToFile(userList);
         this.selectedUser = null;
         userNameTextfield.clear();
     }
@@ -77,7 +76,7 @@ public class UserController {
             this.selectedUser = selected;
             userTitleTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userTitle);
             userNameTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userName);
-            userPlaceTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlace);
+            userPlaceTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userCity);
             userPlzTextfield.setText(String.valueOf(userList.get(userListView.getSelectionModel().getSelectedIndex()).userPlz));
             userStreetTextfield.setText(userList.get(userListView.getSelectionModel().getSelectedIndex()).userStreet);
             userDepartmentCombobox.setItems(Department.loadList());

@@ -10,22 +10,41 @@ import java.io.FileWriter;
 import java.sql.*;
 
 public class User {
-    public String userID = "";
+    public int userID = 0;
     public String userTitle = "";
     public String userName = "";
     public String userStreet = "";
     public short userPlz = 0;
     public Department userDepartment = null;
-    public String userPlace = "";
+    public String userCity = "";
     public static ObservableList<String> userDepartmentList = FXCollections.observableArrayList();
 
+    public User(int id, String title, String name, String street, short zip, String city, int departmentId) {
+        this.userID = id;
+        this.userTitle = title;
+        this.userName = name;
+        this.userStreet = street;
+        this.userPlz = zip;
+        this.userCity = city;
+
+        this.userDepartment = Department.getById(departmentId);
+    }
+    public  User(){
+        this.userID = 0;
+        this.userTitle = null;
+        this.userName = null;
+        this.userStreet = null;
+        this.userPlz = 0;
+        this.userCity = null;
+        this.userDepartment = null;
+    }
     @Override
     public String toString() {
         return userTitle + " " + userName + " " + userDepartment;
     }
 
     public String newCSVLine() {
-        return userID + ";" + userTitle + ";" + userName + ";" + userStreet + ";" + userPlz + ";" + userPlace + ";" + userDepartment + "\n";
+        return userID + ";" + userTitle + ";" + userName + ";" + userStreet + ";" + userPlz + ";" + userCity + ";" + userDepartment + "\n";
     }
 
 
@@ -39,15 +58,17 @@ public class User {
             ResultSet result = statement.executeQuery("SELECT  * FROM users");
             while (result.next()){
                 User user = new User();
-                user.userID = result.getString("user_id");
-                user.userName = result.getString("name");
-                user.userPlace = result.getString("city");
                 if(result.getString("title")!= null) {
-                    user.userTitle = result.getString("title");
+                     user = new User(result.getInt("user_id"),result.getString("title"),
+                            result.getString("name"),result.getString("street"),
+                            result.getShort("zip"), result.getString("city"),
+                            result.getInt("department_id"));
+                }else{
+                    user = new User(result.getInt("user_id"),"",
+                            result.getString("name"),result.getString("street"),
+                            result.getShort("zip"), result.getString("city"),
+                            result.getInt("department_id"));
                 }
-                user.userPlz = result.getShort("zip");
-                user.userDepartment = Department.getById(result.getInt("department_id"));
-                user.userStreet = result.getString("street");
                 list.add(user);
             }
         } catch (SQLException throwables) {
@@ -55,7 +76,7 @@ public class User {
         }
         return list;
     }
-
+/**
     public static ObservableList<User> openFile() {
         String s;
         ObservableList<User> result = FXCollections.observableArrayList();
@@ -64,12 +85,12 @@ public class User {
                 while ((s = br.readLine()) != null) {
                     User user = new User();
                     String[] words = s.split(";");
-                    user.userID = words[0];
+                    user.userID = Integer.parseInt(words[0]);
                     user.userTitle = words[1];
                     user.userName = words[2];
                     user.userStreet = words[3];
                     user.userPlz = Short.parseShort(words[4]);
-                    user.userPlace = words[5];
+                    user.userCity = words[5];
                     user.userDepartment.departmentName = words[6];
 
                     userDepartmentList.add(words[6]);
@@ -95,12 +116,12 @@ public class User {
             e.printStackTrace();
         }
     }
+ */
     public void delete(){
         try{
             Connection connection = AccessDB.getConnection();
 
-            Statement statement = null;
-            statement = connection.createStatement();
+            Statement statement  = connection.createStatement();
             statement.executeUpdate("DELETE FROM users WHERE user_id = " + userID);
         }catch (SQLException throwables){
             throwables.printStackTrace();
@@ -119,7 +140,7 @@ public class User {
             statement.setString(2, userTitle);
             statement.setString(3, userStreet);
             statement.setShort(4, userPlz);
-            statement.setString(5, userPlace);
+            statement.setString(5, userCity);
 
             statement.executeUpdate();
         } catch (SQLException throwables) {
