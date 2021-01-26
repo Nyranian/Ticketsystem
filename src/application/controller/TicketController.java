@@ -39,14 +39,14 @@ public class TicketController {
             ticketPriorityComboBox.setItems(Priority.loadList());
 
             for (Status s : ticketStatusComboBox.getItems()) {
-                if (s.statusID == (ticket.Status.statusID)) {
+                if (s.statusID == (ticket.status.statusID)) {
                     ticketStatusComboBox.getSelectionModel().select(s);
                     break;
                 }
             }
 
             for (Priority p : ticketPriorityComboBox.getItems()) {
-                if (p.priorityID == (ticket.Priority.priorityID)) {
+                if (p.priorityID == (ticket.priority.priorityID)) {
                     ticketPriorityComboBox.getSelectionModel().select(p);
                     break;
                 }

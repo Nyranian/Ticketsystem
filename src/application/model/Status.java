@@ -30,7 +30,7 @@ public class Status {
 
             if(result.next()){
                 obj = new Status();
-                obj.statusID = result.getInt("department_id");
+                obj.statusID = result.getInt("status_id");
                 obj.statusName = result.getString("name");
             }
         } catch (SQLException throwables) {

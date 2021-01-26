@@ -17,12 +17,20 @@ public class Ticket {
     public Status status;
     public Priority priority;
 
-    public  Ticket(int id, String name, String desc, int statusId, int departmentId){
+    public  Ticket(int id, String name, String desc, int statusId, int priorityId){
         this.ticketID = id;
         this.ticketName = name;
         this.ticketBeschreibung = desc;
         this.status = Status.getById(statusId);
-        this.priority = Priority.getById(departmentId);
+        this.priority = Priority.getById(priorityId);
+    }
+
+    public  Ticket(){
+        this.ticketID = 0;
+        this.ticketName = null;
+        this.ticketBeschreibung = null;
+        this.status = null;
+        this.priority = null;
     }
     @Override
     public String toString(){
@@ -42,9 +50,9 @@ public class Ticket {
             ResultSet result = statement.executeQuery("SELECT  * FROM tickets WHERE ticket_id = " +id);
 
             if(result.next()){
-                obj = new Ticket(result.getInt("dpartment_id"),
+                obj = new Ticket(result.getInt("ticket_id"),
                         result.getString("name"), result.getString("desc"),
-                        result.getInt("status_id"), result.getInt("department_id"));
+                        result.getInt("status_id"), result.getInt("priorityId"));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -61,18 +69,9 @@ public class Ticket {
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT  * FROM tickets");
             while (result.next()){
-                Ticket t = new Ticket();
-                t.ticketID = result.getInt("ticket_id");
-                t.ticketName= result.getString("name");
-                t.ticketBeschreibung = result.getString("desc");
-
-                t.status = new Status();
-                t.status = Status.getById(result.getInt("department_id"));
-
-
-                t.priority = new Priority();
-                t.priority.priorityID = result.getInt("priority_id");
-
+                Ticket t = new Ticket(result.getInt("ticket_id"),
+                        result.getString("name"), result.getString("desc"),
+                        result.getInt("status_id"), result.getInt("priority_id"));
 
                 list.add(t);
             }
