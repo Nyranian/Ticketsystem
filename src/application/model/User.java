@@ -147,4 +147,23 @@ public class User {
         }
 
     }
+
+    public static User getById(int id){
+        User obj = null;
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM users WHERE user_id = " +id);
+
+            if(result.next()){
+                obj = new User(result.getInt("user_id"), result.getString("name"), result.getString("title"),
+                        result.getString("street"), result.getShort("zip"), result.getString("city"), result.getInt("department_id"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return obj;
+    }
 }
