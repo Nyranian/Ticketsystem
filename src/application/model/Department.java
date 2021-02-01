@@ -22,23 +22,23 @@ public class Department {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return departmentName;
     }
 
-    public  String newCSVLine(){
+    public String newCSVLine() {
         return departmentID + ";" + departmentName + "\n";
     }
 
-    public static Department getById(int id){
+    public static Department getById(int id) {
         Department obj = null;
         try {
             Connection connection = AccessDB.getConnection();
             Statement statement = null;
             statement = connection.createStatement();
-            ResultSet result = statement.executeQuery("SELECT * FROM departments WHERE department_id = " +id);
+            ResultSet result = statement.executeQuery("SELECT * FROM departments WHERE department_id = " + id);
 
-            if(result.next()){
+            if (result.next()) {
                 obj = new Department(result.getInt("department_id"), result.getString("name"));
             }
         } catch (SQLException throwables) {
@@ -48,14 +48,14 @@ public class Department {
         return obj;
     }
 
-    public static ObservableList<Department> loadList(){
+    public static ObservableList<Department> loadList() {
         ObservableList<Department> list = FXCollections.observableArrayList();
 
         try {
             Connection connection = AccessDB.getConnection();
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery("SELECT  * FROM departments");
-            while (result.next()){
+            while (result.next()) {
                 Department d = new Department();
                 d.departmentName = result.getString("name");
                 d.departmentID = result.getInt("department_id");
@@ -90,7 +90,7 @@ public class Department {
 
      */
 
-    public static void printToFile(ObservableList<Department> departmentList){
+    public static void printToFile(ObservableList<Department> departmentList) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
             for (Department d : departmentList) {
@@ -102,19 +102,20 @@ public class Department {
             e.printStackTrace();
         }
     }
-    public void delete(){
-        try{
+
+    public void delete() {
+        try {
             Connection connection = AccessDB.getConnection();
 
             Statement statement = null;
             statement = connection.createStatement();
             statement.executeUpdate("DELETE FROM departments WHERE  department_id = " + departmentID);
-        }catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void update(){
+    public void update() {
         try {
             Connection connection = AccessDB.getConnection();
 
