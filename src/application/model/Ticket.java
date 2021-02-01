@@ -3,6 +3,7 @@ package application.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.sql.Connection;
@@ -16,14 +17,15 @@ public class Ticket {
     public String ticketBeschreibung;
     public Status status;
     public Priority priority;
-    public ObservableList<User> userList = FXCollections.observableArrayList();
+    public ObservableList<User> userList;
 
-    public Ticket(int id, String name, String desc, int statusId, int priorityId){
+    public Ticket(int id, String name, String desc, int statusId, int priorityId, ObservableList<User> userList){
         this.ticketID = id;
         this.ticketName = name;
         this.ticketBeschreibung = desc;
         this.status = Status.getById(statusId);
         this.priority = Priority.getById(priorityId);
+        this.userList = userList;
     }
 
     public  Ticket(){
@@ -32,6 +34,7 @@ public class Ticket {
         this.ticketBeschreibung = null;
         this.status = null;
         this.priority = null;
+        this.userList = null;
     }
     @Override
     public String toString(){
@@ -53,13 +56,33 @@ public class Ticket {
             if(result.next()){
                 obj = new Ticket(result.getInt("ticket_id"),
                         result.getString("name"), result.getString("desc"),
-                        result.getInt("status_id"), result.getInt("priorityId"));
+                        result.getInt("status_id"), result.getInt("priorityId"),
+                        userToTickets(id));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         return obj;
+    }
+
+    public static ObservableList<User> userToTickets(int id){
+        ObservableList<User> userList = FXCollections.observableArrayList();
+        try {
+            Connection connection = AccessDB.getConnection();
+            Statement statement = null;
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery("SELECT * FROM users_to_tickets WHERE ticket_id = " +id);
+
+            while(result.next()){
+                userList.add(User.getById(result.getInt("user_id")));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return userList;
     }
 
     public static ObservableList<Ticket> openFile() {
@@ -72,7 +95,8 @@ public class Ticket {
             while (result.next()){
                 Ticket t = new Ticket(result.getInt("ticket_id"),
                         result.getString("name"), result.getString("desc"),
-                        result.getInt("status_id"), result.getInt("priority_id"));
+                        result.getInt("status_id"), result.getInt("priority_id"),
+                        userToTickets(result.getInt("ticket_id")));
 
                 list.add(t);
             }
@@ -82,6 +106,7 @@ public class Ticket {
         }
         return list;
     }
+
     public static void printToFile(ObservableList<Ticket> ticketList){
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("tickets.csv"));
@@ -92,7 +117,8 @@ public class Ticket {
             bw.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }}
+        }
+    }
 
 }
 

@@ -13,7 +13,6 @@ public class User {
     public short userPlz = 0;
     public Department userDepartment = null;
     public String userCity = "";
-    public static ObservableList<String> userDepartmentList = FXCollections.observableArrayList();
 
     public User(int id, String title, String name, String street, short zip, String city, int departmentId) {
         this.userID = id;
@@ -39,7 +38,7 @@ public class User {
 
     @Override
     public String toString() {
-        return userTitle + " " + userName + " " + userDepartment;
+        return userTitle + " " + userName;
     }
 
     public String newCSVLine() {

@@ -30,6 +30,7 @@ public class TicketController {
         ticketList = Ticket.openFile();
         ticketNameField.setText("");
         ticketDescField.setText("");
+        remainingUsersComboBox.setItems(User.loadUserList());
     }
 
     public void setTicket(Ticket ticket){
@@ -40,6 +41,7 @@ public class TicketController {
             ticketDescField.setText(ticket.ticketBeschreibung);
             ticketStatusComboBox.setItems(Status.loadStatusList());
             ticketPriorityComboBox.setItems(Priority.loadList());
+            ticketUserListView.setItems((ticket.userList));
 
             for (Status s : ticketStatusComboBox.getItems()) {
                 if (s.statusID == (ticket.status.statusID)) {
@@ -95,7 +97,6 @@ public class TicketController {
     }
 
 
-
     public void closeClicked(ActionEvent actionEvent) {
         MyFXMLLoader loader = new MyFXMLLoader();
         Parent root = loader.loadFXML("view/scene.fxml");
@@ -103,5 +104,19 @@ public class TicketController {
         c.contentPane.getChildren().clear();
         c.ticketListView.refresh();
         System.out.println("HHHHHHHHHHHHHHHHH");
+    }
+
+    public void addUserClicked(ActionEvent actionEvent) {
+        if(remainingUsersComboBox.getSelectionModel().getSelectedItem() != null){
+            ticketUserListView.getItems().add(remainingUsersComboBox.getSelectionModel().getSelectedItem());
+            remainingUsersComboBox.getItems().remove(remainingUsersComboBox.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    public void removeUserClicked(ActionEvent actionEvent) {
+        if(ticketUserListView.getSelectionModel().getSelectedItem() != null){
+            remainingUsersComboBox.getItems().add(ticketUserListView.getSelectionModel().getSelectedItem());
+            ticketUserListView.getItems().remove(ticketUserListView.getSelectionModel().getSelectedItem());
+        }
     }
 }
