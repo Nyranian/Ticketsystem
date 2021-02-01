@@ -26,10 +26,11 @@ public class Department {
         return departmentName;
     }
 
+    /**
     public String newCSVLine() {
         return departmentID + ";" + departmentName + "\n";
     }
-
+    */
     public static Department getById(int id) {
         Department obj = null;
         try {
@@ -68,7 +69,8 @@ public class Department {
         return list;
     }
 
-    /*public static ObservableList<Department> openFile(){
+    /**
+    public static ObservableList<Department> openFile(){
         ObservableList<Department> list = FXCollections.observableArrayList();
 
         try {
@@ -89,7 +91,7 @@ public class Department {
     }
 
      */
-
+    /**
     public static void printToFile(ObservableList<Department> departmentList) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter("department.csv"));
@@ -102,7 +104,7 @@ public class Department {
             e.printStackTrace();
         }
     }
-
+    **/
     public void delete() {
         try {
             Connection connection = AccessDB.getConnection();

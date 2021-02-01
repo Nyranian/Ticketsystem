@@ -27,7 +27,7 @@ public class TicketController {
 
 
     public void initialize(){
-        ticketList = Ticket.openFile();
+        ticketList = Ticket.loadList();
         ticketNameField.setText("");
         ticketDescField.setText("");
         remainingUsersComboBox.setItems(User.loadUserList());

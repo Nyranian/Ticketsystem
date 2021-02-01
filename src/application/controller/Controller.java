@@ -76,7 +76,7 @@ public class Controller {
     }
 
     public void initialize() {
-        ticketListView.setItems(Ticket.openFile());
+        ticketListView.setItems(Ticket.loadList());
         ticketList.setAll(ticketListView.getItems());
 
         ObservableList<Status> stati = Status.loadStatusList();

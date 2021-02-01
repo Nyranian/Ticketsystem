@@ -6,13 +6,13 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class User {
-    public int userID = 0;
-    public String userTitle = "";
-    public String userName = "";
-    public String userStreet = "";
+    public int userID;
+    public String userTitle;
+    public String userName;
+    public String userStreet;
     public short userPlz = 0;
-    public Department userDepartment = null;
-    public String userCity = "";
+    public Department userDepartment;
+    public String userCity;
 
     public User(int id, String title, String name, String street, short zip, String city, int departmentId) {
         this.userID = id;
@@ -40,11 +40,6 @@ public class User {
     public String toString() {
         return userTitle + " " + userName;
     }
-
-    public String newCSVLine() {
-        return userID + ";" + userTitle + ";" + userName + ";" + userStreet + ";" + userPlz + ";" + userCity + ";" + userDepartment + "\n";
-    }
-
 
     public static ObservableList<User> loadUserList() {
         ObservableList<User> list = FXCollections.observableArrayList();
@@ -74,47 +69,7 @@ public class User {
         return list;
     }
 
-    /**
-     * public static ObservableList<User> openFile() {
-     * String s;
-     * ObservableList<User> result = FXCollections.observableArrayList();
-     * try {
-     * try (BufferedReader br = new BufferedReader(new FileReader("users.csv"))) {
-     * while ((s = br.readLine()) != null) {
-     * User user = new User();
-     * String[] words = s.split(";");
-     * user.userID = Integer.parseInt(words[0]);
-     * user.userTitle = words[1];
-     * user.userName = words[2];
-     * user.userStreet = words[3];
-     * user.userPlz = Short.parseShort(words[4]);
-     * user.userCity = words[5];
-     * user.userDepartment.departmentName = words[6];
-     * <p>
-     * userDepartmentList.add(words[6]);
-     * <p>
-     * result.add(user);
-     * }
-     * }
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     * return result;
-     * }
-     * <p>
-     * public static void printToFile(ObservableList<User> userList) {
-     * try {
-     * BufferedWriter bw = new BufferedWriter(new FileWriter("users.csv"));
-     * for (User u : userList) {
-     * bw.write(u.newCSVLine());
-     * }
-     * bw.flush();
-     * bw.close();
-     * } catch (Exception e) {
-     * e.printStackTrace();
-     * }
-     * }
-     */
+
     public void delete() {
         try {
             Connection connection = AccessDB.getConnection();

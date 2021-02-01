@@ -3,8 +3,6 @@ package application.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.sql.*;
 
 public class Status {
@@ -24,10 +22,6 @@ public class Status {
     @Override
     public String toString() {
         return statusName;
-    }
-
-    public String newCSVLine() {
-        return statusID + ";" + statusName + "\n";
     }
 
     public static Status getById(int id) {
@@ -103,18 +97,5 @@ public class Status {
         return list;
     }
 
-    public static void printToFile(ObservableList<Status> statusList) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("stati.csv"));
-            for (Status s : statusList) {
-                bw.write(s.newCSVLine());
-            }
-            bw.flush();
-
-            bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }
